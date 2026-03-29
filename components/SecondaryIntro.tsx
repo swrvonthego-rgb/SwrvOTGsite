@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Volume2, VolumeX, Maximize, Minimize, RotateCcw } from 'lucide-react';
+import { Volume2, VolumeX, Maximize, Minimize, RotateCcw, X } from 'lucide-react';
 
 export const SecondaryIntro: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -8,6 +8,15 @@ export const SecondaryIntro: React.FC = () => {
   const [isMuted, setIsMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isCinematic, setIsCinematic] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
+
+  const handleDismiss = () => {
+    if (videoRef.current) videoRef.current.pause();
+    document.body.style.overflow = '';
+    setPhase('ended');
+    setIsDismissed(true);
+    document.getElementById('hero-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   useEffect(() => {
     // Wait for the initial video to finish shrinking (3s delay + 1.2s transition)
@@ -103,6 +112,8 @@ export const SecondaryIntro: React.FC = () => {
     }
   };
 
+  if (isDismissed) return null;
+
   let wrapperClasses = '';
   if (phase === 'waiting') {
     wrapperClasses = 'fixed inset-0 opacity-0 pointer-events-none -z-10';
@@ -148,6 +159,13 @@ export const SecondaryIntro: React.FC = () => {
             title="Toggle Fullscreen"
           >
             {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
+          </button>
+          <button
+            onClick={handleDismiss}
+            className="p-3 bg-black/50 hover:bg-red-500 text-white rounded-full backdrop-blur-sm transition-all"
+            title="Close video"
+          >
+            <X size={20} />
           </button>
         </div>
       )}

@@ -38,7 +38,7 @@ export const Services: React.FC = () => {
             const isBYOB = service.title === "BYOB Training";
             const isBirdsongMethod = service.title === "Birdsong Method";
             const isExternal = isBYOB || isBirdsongMethod;
-            const href = isBYOB ? "https://trainbyob.me" : isBirdsongMethod ? "#birdsong-method" : `#${service.title.toLowerCase().replace(/\s+/g, '-')}`;
+            const href = isBYOB ? "https://trainbyob.me" : isBirdsongMethod ? "http://localhost:3000" : `#${service.title.toLowerCase().replace(/\s+/g, '-')}`;
             return (
               <a 
                 key={idx} 

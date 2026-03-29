@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Volume2, VolumeX, Play, Pause, RotateCcw, Maximize, Minimize } from 'lucide-react';
+import { Volume2, VolumeX, Play, Pause, RotateCcw, Maximize, Minimize, X } from 'lucide-react';
 
 export const ShowcaseVideo: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -7,6 +7,12 @@ export const ShowcaseVideo: React.FC = () => {
   const [isMuted, setIsMuted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
+
+  const handleDismiss = () => {
+    if (videoRef.current) videoRef.current.pause();
+    setIsDismissed(true);
+  };
 
   useEffect(() => {
     // Start paused and at the beginning
@@ -101,7 +107,7 @@ export const ShowcaseVideo: React.FC = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative w-full h-screen bg-black overflow-hidden">
+    <section ref={containerRef} className={`relative w-full h-screen bg-black overflow-hidden transition-all duration-500 ${isDismissed ? 'hidden' : ''}`}>
       <video
         ref={videoRef}
         src="https://res.cloudinary.com/dqm5ehvto/video/upload/v1773865051/copy_506106AC-E7D2-4CDF-A553-6E2DC5A6894F_ckn5nm.mov"
@@ -145,6 +151,16 @@ export const ShowcaseVideo: React.FC = () => {
           aria-label={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
         >
           {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
+        </button>
+
+        <div className="w-px h-5 bg-white/20 mx-1"></div>
+
+        <button
+          onClick={handleDismiss}
+          className="text-white hover:text-red-400 transition-colors p-1.5"
+          aria-label="Close video"
+        >
+          <X size={20} />
         </button>
       </div>
 

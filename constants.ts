@@ -36,7 +36,7 @@ export const SERVICES: Service[] = [
 export const NAV_ITEMS: NavItem[] = [
   { label: "THE ECOSYSTEM", href: "#ecosystem" },
   { label: "BYOB TRAINING", href: "https://trainbyob.me" },
-  { label: "BIRDSONG METHOD", href: "#birdsong-method" },
+  { label: "BIRDSONG METHOD", href: "http://localhost:3000" },
   { label: "BOOKS", href: "#books" },
   { label: "PODCAST", href: "#podcast" },
   { label: "ABOUT ZION", href: "#about" },
