@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swrv On-The-Go — Brand Transmission</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════
+   RESET & BASE
+════════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; overflow:hidden; background:#000008; }
+
+:root {
+  --cyan:    #00FFFF;
+  --magenta: #FF00CC;
+  --gold:    #FFD700;
+  --red:     #FF4500;
+  --green:   #00FF88;
+  --violet:  #9B59FF;
+  --white:   #E0F8FF;
+  --dim:     rgba(224,248,255,0.5);
+  --fh: 'Orbitron', sans-serif;
+  --fm: 'Share Tech Mono', monospace;
+}
+
+/* ════════════════════════════════════════
+   LAYERS
+════════════════════════════════════════ */
+#art { position:fixed; inset:0; width:100%; height:100%; z-index:0; }
+#scanlines {
+  position:fixed; inset:0; z-index:5; pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px);
+}
+#vignette {
+  position:fixed; inset:0; z-index:6; pointer-events:none;
+  background:radial-gradient(ellipse at 50% 42%,transparent 28%,rgba(0,0,8,0.78) 100%);
+}
+#bar-top, #bar-bot { position:fixed; left:0; right:0; z-index:50; background:#000; }
+#bar-top { top:0; height:8vh; }
+#bar-bot { bottom:0; height:8vh; }
+
+/* HUD CORNERS */
+.hc { position:fixed; z-index:60; width:18px; height:18px; pointer-events:none; }
+.hc.tl { top:8vh; left:0;  border-top:1px solid rgba(0,255,255,0.5); border-left:1px solid rgba(0,255,255,0.5); }
+.hc.tr { top:8vh; right:0; border-top:1px solid rgba(0,255,255,0.5); border-right:1px solid rgba(0,255,255,0.5); }
+.hc.bl { bottom:8vh; left:0;  border-bottom:1px solid rgba(0,255,255,0.5); border-left:1px solid rgba(0,255,255,0.5); }
+.hc.br { bottom:8vh; right:0; border-bottom:1px solid rgba(0,255,255,0.5); border-right:1px solid rgba(0,255,255,0.5); }
+
+/* HUD BARS */
+#hud-top {
+  position:fixed; top:0; left:0; right:0; height:8vh; z-index:55;
+  display:flex; align-items:center; justify-content:space-between; padding:0 22px; pointer-events:none;
+}
+#hud-bot {
+  position:fixed; bottom:0; left:0; right:0; height:8vh; z-index:55;
+  display:flex; align-items:center; justify-content:space-between; padding:0 22px;
+}
+.hud-txt { font-family:var(--fm); font-size:clamp(0.45rem,1.1vw,0.62rem); color:rgba(0,255,255,0.4); letter-spacing:0.18em; text-transform:uppercase; }
+.hud-txt .hi { color:var(--cyan); }
+.blink { animation:blink 1.1s step-start infinite; }
+@keyframes blink { 50%{opacity:0} }
+
+/* ════════════════════════════════════════
+   STAGE & SCENES
+════════════════════════════════════════ */
+#stage { position:fixed; inset:0; z-index:20; }
+.scene {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; justify-content:flex-end; align-items:center;
+  padding:0 6vw 18vh; opacity:0; transition:opacity 1.6s ease; pointer-events:none; text-align:center;
+}
+.scene.active { opacity:1; pointer-events:auto; }
+
+.scene-tag { font-family:var(--fm); font-size:clamp(0.45rem,1.2vw,0.62rem); letter-spacing:0.4em; text-transform:uppercase; color:rgba(0,255,255,0.5); margin-bottom:10px; animation:fadeUp 0.8s ease both; }
+.hl { font-family:var(--fh); font-size:clamp(2rem,8vw,7rem); font-weight:900; line-height:0.95; text-transform:uppercase; letter-spacing:0.02em; animation:fadeUp 0.85s cubic-bezier(0.16,1,0.3,1) both; animation-delay:0.15s; }
+.sub { font-family:var(--fh); font-size:clamp(1rem,3.5vw,2.6rem); font-weight:700; line-height:1.25; animation:fadeUp 0.85s ease both; animation-delay:0.3s; }
+.copy { font-family:var(--fm); font-size:clamp(0.7rem,1.5vw,0.88rem); line-height:2.1; color:var(--dim); max-width:580px; margin-top:14px; animation:fadeUp 0.8s ease both; animation-delay:0.45s; }
+.rule { height:1px; width:0; margin:14px auto; animation:ruleGrow 0.8s ease both; animation-delay:0.3s; }
+.stat { font-family:var(--fh); font-size:clamp(4rem,14vw,11rem); font-weight:900; line-height:1; letter-spacing:-0.02em; animation:fadeUp 0.9s ease both; animation-delay:0.1s; }
+
+/* Neon colors */
+.cyan    { color:var(--cyan);    text-shadow:0 0 18px var(--cyan),   0 0 36px rgba(0,255,255,0.35); }
+.magenta { color:var(--magenta); text-shadow:0 0 18px var(--magenta),0 0 36px rgba(255,0,204,0.35); }
+.gold    { color:var(--gold);    text-shadow:0 0 18px var(--gold),   0 0 36px rgba(255,215,0,0.35); }
+.red     { color:var(--red);     text-shadow:0 0 18px var(--red),    0 0 36px rgba(255,69,0,0.35);  }
+.green   { color:var(--green);   text-shadow:0 0 18px var(--green),  0 0 36px rgba(0,255,136,0.35); }
+.violet  { color:var(--violet);  text-shadow:0 0 18px var(--violet), 0 0 36px rgba(155,89,255,0.35);}
+.white   { color:var(--white); }
+.r-cyan  { background:var(--cyan);    box-shadow:0 0 8px var(--cyan); }
+.r-gold  { background:var(--gold);    box-shadow:0 0 8px var(--gold); }
+.r-mag   { background:var(--magenta); box-shadow:0 0 8px var(--magenta); }
+.r-red   { background:var(--red);     box-shadow:0 0 8px var(--red); }
+.r-grn   { background:var(--green);   box-shadow:0 0 8px var(--green); }
+
+/* Glitch */
+.glitch { position:relative; }
+.glitch::before, .glitch::after { content:attr(data-g); position:absolute; top:0; left:0; width:100%; height:100%; }
+.glitch::before { color:var(--magenta); animation:g1 4s infinite; clip-path:polygon(0 15%,100% 15%,100% 40%,0 40%); }
+.glitch::after  { color:var(--cyan);    animation:g2 4s infinite; clip-path:polygon(0 62%,100% 62%,100% 85%,0 85%); }
+@keyframes g1 { 0%,87%,100%{transform:translate(0);opacity:0} 88%{transform:translate(-3px,1px);opacity:0.85} 90%{transform:translate(2px,-1px);opacity:0} 92%{transform:translate(-1px,2px);opacity:0.7} 94%{transform:translate(0);opacity:0} }
+@keyframes g2 { 0%,85%,100%{transform:translate(0);opacity:0} 86%{transform:translate(3px,-1px);opacity:0.85} 88%{transform:translate(-2px,1px);opacity:0} 90%{transform:translate(1px,-2px);opacity:0.7} 92%{transform:translate(0);opacity:0} }
+
+/* Services */
+.svc-list { list-style:none; display:flex; flex-direction:column; gap:9px; max-width:480px; width:100%; text-align:left; }
+.svc-row { display:flex; align-items:flex-start; gap:14px; font-family:var(--fm); font-size:clamp(0.68rem,1.4vw,0.82rem); color:var(--dim); border-left:2px solid var(--green); padding-left:12px; animation:fadeUp 0.6s ease both; }
+.svc-row span { color:var(--green); font-weight:700; flex-shrink:0; }
+.svc-desc { font-size:0.8em; color:rgba(0,255,136,0.45); display:block; margin-top:1px; }
+
+/* Tags */
+.tags { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; max-width:600px; margin-top:14px; }
+.tag { font-family:var(--fm); font-size:clamp(0.55rem,1.2vw,0.68rem); letter-spacing:0.15em; text-transform:uppercase; color:var(--violet); border:1px solid rgba(155,89,255,0.38); padding:5px 13px; border-radius:1px; box-shadow:0 0 8px rgba(155,89,255,0.1); animation:fadeUp 0.6s ease both; }
+.tl { display:block; font-family:var(--fh); font-weight:900; text-transform:uppercase; animation:fadeUp 0.85s ease both; }
+.logo  { font-family:var(--fh); font-size:clamp(3rem,11vw,9rem); font-weight:900; letter-spacing:0.08em; animation:fadeUp 1s ease both; animation-delay:0.2s; }
+.logo-s{ font-family:var(--fm); font-size:clamp(0.6rem,2.3vw,1.1rem); letter-spacing:0.58em; text-transform:uppercase; color:var(--white); animation:fadeUp 0.8s ease both; animation-delay:0.6s; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+@keyframes ruleGrow { from{width:0} to{width:80px} }
+
+/* ════════════════════════════════════════
+   CAPTION BAR
+════════════════════════════════════════ */
+#cap-bar { position:fixed; bottom:10vh; left:50%; transform:translateX(-50%); width:min(88vw,860px); z-index:70; text-align:center; transition:opacity 0.5s ease; }
+#cap-label { font-family:var(--fm); font-size:clamp(0.42rem,1vw,0.58rem); letter-spacing:0.4em; text-transform:uppercase; color:rgba(0,255,255,0.48); margin-bottom:4px; }
+#cap-text  { font-family:var(--fm); font-size:clamp(0.72rem,1.6vw,0.94rem); line-height:1.75; color:rgba(224,248,255,0.82); text-shadow:0 1px 10px rgba(0,0,0,0.98),0 0 24px rgba(0,0,0,0.9); }
+
+/* ════════════════════════════════════════
+   PROGRESS
+════════════════════════════════════════ */
+#prog-track { position:fixed; bottom:8vh; left:0; right:0; height:2px; background:rgba(0,255,255,0.07); z-index:70; }
+#prog-fill  { height:100%; width:0%; background:var(--cyan); box-shadow:0 0 6px var(--cyan); transition:width 0.1s linear; }
+
+/* ════════════════════════════════════════
+   CONTROLS
+════════════════════════════════════════ */
+#controls { position:fixed; bottom:calc(8vh + 8px); right:16px; z-index:80; display:flex; flex-direction:column; gap:5px; align-items:flex-end; }
+.cr { display:flex; gap:5px; }
+.cb { background:rgba(0,0,10,0.75); border:1px solid rgba(0,255,255,0.22); color:rgba(0,255,255,0.6); font-family:var(--fm); font-size:0.52rem; letter-spacing:0.15em; text-transform:uppercase; padding:5px 12px; cursor:pointer; transition:border-color 0.2s,color 0.2s,box-shadow 0.2s; backdrop-filter:blur(6px); }
+.cb:hover { border-color:var(--cyan); color:var(--cyan); box-shadow:0 0 10px rgba(0,255,255,0.25); }
+
+/* ════════════════════════════════════════
+   DOTS
+════════════════════════════════════════ */
+#dots { position:fixed; top:calc(8vh + 10px); right:20px; display:flex; gap:6px; z-index:70; }
+.dot { width:5px; height:5px; border-radius:50%; background:rgba(0,255,255,0.18); cursor:pointer; transition:background 0.3s,box-shadow 0.3s; }
+.dot.on { background:var(--cyan); box-shadow:0 0 6px var(--cyan); }
+
+/* ════════════════════════════════════════
+   AUDIO WAVE
+════════════════════════════════════════ */
+.wave { display:flex; align-items:center; gap:3px; }
+.wb { width:2px; background:var(--cyan); border-radius:1px; animation:wavePulse 0.75s ease-in-out infinite; }
+.wb:nth-child(1){height:5px;animation-delay:0s}
+.wb:nth-child(2){height:9px;animation-delay:0.12s}
+.wb:nth-child(3){height:13px;animation-delay:0.24s}
+.wb:nth-child(4){height:9px;animation-delay:0.36s}
+.wb:nth-child(5){height:5px;animation-delay:0.48s}
+.wb.off { animation:none; opacity:0.2; height:4px!important; }
+@keyframes wavePulse { 0%,100%{transform:scaleY(0.35);opacity:0.45} 50%{transform:scaleY(1);opacity:1} }
+
+/* ════════════════════════════════════════
+   START SCREEN
+════════════════════════════════════════ */
+#start { position:fixed; inset:0; z-index:300; background:rgba(0,0,8,0.97); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:24px; text-align:center; cursor:pointer; transition:opacity 0.8s ease; }
+.s-logo { font-family:var(--fh); font-size:clamp(2.5rem,8vw,6rem); font-weight:900; color:var(--gold); text-shadow:0 0 30px var(--gold),0 0 60px rgba(255,215,0,0.4); letter-spacing:0.12em; }
+.s-sub  { font-family:var(--fm); font-size:clamp(0.55rem,1.4vw,0.78rem); letter-spacing:0.45em; text-transform:uppercase; color:rgba(0,255,255,0.6); }
+.s-btn  { font-family:var(--fm); font-size:clamp(0.7rem,1.6vw,0.9rem); letter-spacing:0.3em; text-transform:uppercase; color:var(--cyan); border:1px solid var(--cyan); padding:14px 32px; margin-top:16px; animation:startPulse 2s ease-in-out infinite; box-shadow:0 0 20px rgba(0,255,255,0.2); }
+.s-hint { font-family:var(--fm); font-size:clamp(0.5rem,1vw,0.62rem); color:rgba(0,255,255,0.28); letter-spacing:0.2em; }
+@keyframes startPulse { 0%,100%{box-shadow:0 0 20px rgba(0,255,255,0.2)} 50%{box-shadow:0 0 35px rgba(0,255,255,0.45)} }
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start">
+  <div class="s-logo">SWRV//OS</div>
+  <div class="s-sub">Brand Transmission — Ready to Deploy</div>
+  <div class="s-btn">[ INITIATE TRANSMISSION ]</div>
+  <div class="s-hint">Enables voice narration &nbsp;·&nbsp; Space = pause &nbsp;·&nbsp; ← → = navigate</div>
+</div>
+
+<!-- CANVAS + OVERLAYS -->
+<canvas id="art"></canvas>
+<div id="scanlines"></div>
+<div id="vignette"></div>
+<div id="bar-top"></div>
+<div id="bar-bot"></div>
+<div class="hc tl"></div><div class="hc tr"></div>
+<div class="hc bl"></div><div class="hc br"></div>
+
+<!-- HUD TOP -->
+<div id="hud-top">
+  <div class="hud-txt">SWRV//OS <span class="hi">v2.0.25</span> <span class="hi blink">▊</span></div>
+  <div class="hud-txt" id="counter">01 / 09</div>
+  <div class="hud-txt">SIGNAL: <span class="hi">LOCKED</span></div>
+</div>
+
+<!-- DOT NAV -->
+<div id="dots"></div>
+
+<!-- SCENES -->
+<div id="stage">
+
+  <!-- S0: ROADBLOCKS -->
+  <div class="scene" data-idx="0">
+    <div class="scene-tag">// SYSTEM ALERT — THREAT DETECTED</div>
+    <h1 class="hl red glitch" data-g="ROADBLOCKS." style="font-size:clamp(2.5rem,10vw,8.5rem)">ROADBLOCKS.</h1>
+    <div class="rule r-red"></div>
+    <p class="copy">They come for everyone.<br>No matter how prepared, how talented, or how driven you are.</p>
+  </div>
+
+  <!-- S1: AGENCIES STOP -->
+  <div class="scene" data-idx="1">
+    <div class="scene-tag">// STANDARD PROTOCOL — LOGGED</div>
+    <h2 class="sub white" style="animation-delay:0.05s">Most agencies</h2>
+    <h1 class="hl cyan">GET A JOB DONE.</h1>
+    <div class="rule r-cyan"></div>
+    <p class="copy">Complete the transaction. Close the ticket. Move on.<br><span style="color:rgba(255,69,0,0.85)">You are not a transaction to us.</span></p>
+  </div>
+
+  <!-- S2: WE SWERVE -->
+  <div class="scene" data-idx="2">
+    <div class="scene-tag">// ALTERNATE TRAJECTORY ENGAGED</div>
+    <p class="sub" style="color:rgba(0,255,255,0.55);font-size:clamp(0.9rem,2.4vw,1.5rem);animation-delay:0.05s">We don't stop.</p>
+    <h1 class="hl cyan glitch" data-g="WE SWERVE." style="font-size:clamp(2.5rem,10vw,8.5rem)">WE SWERVE.</h1>
+    <div class="rule r-cyan"></div>
+    <h2 class="sub gold" style="font-size:clamp(0.9rem,2.8vw,2rem);animation-delay:0.5s">Swrv On-The-Go</h2>
+  </div>
+
+  <!-- S3: 20+ YEARS -->
+  <div class="scene" data-idx="3">
+    <div class="scene-tag">// MISSION LOG — ELAPSED CYCLES</div>
+    <div class="stat gold">20+</div>
+    <p style="font-family:var(--fm);font-size:clamp(0.55rem,1.4vw,0.8rem);letter-spacing:0.32em;text-transform:uppercase;color:rgba(255,215,0,0.6);animation:fadeUp 0.8s ease both;animation-delay:0.2s">YEARS OF REAL-WORLD EXPERIENCE</p>
+    <div class="rule r-gold"></div>
+    <p class="copy">Not software. Not shortcuts. Not automation.<br><span style="color:var(--gold)">Genuine care. Lived experience. Your purpose.</span></p>
+  </div>
+
+  <!-- S4: SERVICES -->
+  <div class="scene" data-idx="4">
+    <div class="scene-tag">// CAPABILITY MANIFEST — FULL SUITE</div>
+    <ul class="svc-list">
+      <li class="svc-row" style="animation-delay:0.1s"><span>01</span><div>Photography &amp; Videography<span class="svc-desc">Visual storytelling that captures who you really are</span></div></li>
+      <li class="svc-row" style="animation-delay:0.28s"><span>02</span><div>Jingles &amp; Full-Length Songs<span class="svc-desc">Original music that makes your brand unforgettable</span></div></li>
+      <li class="svc-row" style="animation-delay:0.46s"><span>03</span><div>Commercials &amp; Produced Content<span class="svc-desc">Content that moves people to act</span></div></li>
+      <li class="svc-row" style="animation-delay:0.64s"><span>04</span><div>Radio Shows → Podcasts<span class="svc-desc">Longform content that builds loyal audiences</span></div></li>
+      <li class="svc-row" style="animation-delay:0.82s"><span>05</span><div>Vision &amp; Mission Statements<span class="svc-desc">The foundation everything else is built on</span></div></li>
+    </ul>
+    <p class="copy" style="animation-delay:1s;color:var(--green)">// FULL-SERVICE BRANDING ECOSYSTEM</p>
+  </div>
+
+  <!-- S5: EVERYONE IS A CREATOR -->
+  <div class="scene" data-idx="5">
+    <div class="scene-tag">// WORLD STATUS — UPDATED</div>
+    <h2 class="sub white" style="animation-delay:0.08s">Almost everyone</h2>
+    <h1 class="hl violet" style="animation-delay:0.22s">IS AN ARTIST.</h1>
+    <div class="tags">
+      <span class="tag" style="animation-delay:0.42s">The Entrepreneur</span>
+      <span class="tag" style="animation-delay:0.54s">The Pastor</span>
+      <span class="tag" style="animation-delay:0.66s">The Coach</span>
+      <span class="tag" style="animation-delay:0.78s">The Business Owner</span>
+      <span class="tag" style="animation-delay:0.9s">The Content Creator</span>
+      <span class="tag" style="animation-delay:1.02s">The Movement</span>
+    </div>
+  </div>
+
+  <!-- S6: YOU NEED MORE -->
+  <div class="scene" data-idx="6">
+    <div class="scene-tag">// NAVIGATING UNKNOWN SPACE</div>
+    <h2 class="sub white" style="animation-delay:0.08s;font-size:clamp(1.1rem,3.5vw,2.6rem)">You need</h2>
+    <h1 class="hl gold" style="animation-delay:0.22s">MORE THAN<br>A SERVICE.</h1>
+    <div class="rule r-gold"></div>
+    <p class="copy" style="animation-delay:0.5s">You need a guide who <span style="color:var(--cyan)">swerves with you</span><br>around every obstacle.</p>
+  </div>
+
+  <!-- S7: LOVE GPS -->
+  <div class="scene" data-idx="7">
+    <div class="scene-tag">// NAVIGATION SYSTEM — LOCKED ON</div>
+    <span class="tl white" style="font-size:clamp(1.3rem,4.5vw,3.6rem);animation-delay:0.1s">Swerve on Roadblocks.</span>
+    <span class="tl magenta" style="font-size:clamp(1.6rem,6vw,5rem);animation-delay:0.32s">LET LOVE GPS.</span>
+    <div class="rule r-mag" style="animation-delay:0.55s"></div>
+    <p class="copy" style="animation-delay:0.68s">Every challenge. Every detour.<br><span style="color:var(--magenta)">Love keeps us on course.</span></p>
+  </div>
+
+  <!-- S8: BRAND CLOSE -->
+  <div class="scene" data-idx="8">
+    <div class="scene-tag">// TRANSMISSION COMPLETE — MISSION ACTIVE</div>
+    <div class="logo gold glitch" data-g="SWRV">SWRV</div>
+    <div class="logo-s" style="margin-top:4px">On-The-Go</div>
+    <div class="rule r-gold" style="animation-delay:0.8s;width:110px"></div>
+    <p class="copy" style="animation-delay:1.05s;color:rgba(255,215,0,0.6);letter-spacing:0.22em;text-transform:uppercase;font-size:clamp(0.52rem,1.1vw,0.68rem)">Swerve on Roadblocks. Let Love GPS.</p>
+    <p class="copy" style="animation-delay:1.35s;color:rgba(0,255,255,0.45);font-size:clamp(0.5rem,1vw,0.62rem);margin-top:5px">swrvonthego@gmail.com</p>
+  </div>
+
+</div><!-- /stage -->
+
+<!-- CAPTION BAR -->
+<div id="cap-bar">
+  <div id="cap-label">NARRATION CHANNEL 01</div>
+  <div id="cap-text">Awaiting transmission...</div>
+</div>
+
+<!-- PROGRESS -->
+<div id="prog-track"><div id="prog-fill"></div></div>
+
+<!-- CONTROLS -->
+<div id="controls">
+  <div class="cr">
+    <button class="cb" id="btn-prev">← PREV</button>
+    <button class="cb" id="btn-pause">⏸ PAUSE</button>
+    <button class="cb" id="btn-next">NEXT →</button>
+  </div>
+  <button class="cb" id="btn-replay" style="margin-top:2px">↺ REPLAY</button>
+</div>
+
+<!-- HUD BOTTOM -->
+<div id="hud-bot">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div class="wave">
+      <div class="wb off" id="w1"></div><div class="wb off" id="w2"></div>
+      <div class="wb off" id="w3"></div><div class="wb off" id="w4"></div>
+      <div class="wb off" id="w5"></div>
+    </div>
+    <div class="hud-txt" id="audio-label">STANDBY</div>
+  </div>
+  <div class="hud-txt" id="time-display">00:00</div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════
+   DATA
+═══════════════════════════════════════ */
+const SCENES=[
+  {label:"TRANSMISSION 01/09 — THREAT DETECTED",narration:"Every journey. Has roadblocks. They come for everyone. No matter how prepared. No matter how talented. No matter how driven you are. No exceptions.",rgb:[255,69,0]},
+  {label:"TRANSMISSION 02/09 — STANDARD PROTOCOL",narration:"Most agencies. Get the job done. Complete the transaction. Close the ticket. Move on. But you. Are not a transaction. To us.",rgb:[0,160,255]},
+  {label:"TRANSMISSION 03/09 — TRAJECTORY SHIFT",narration:"We don't stop. Twenty years. Navigating every obstacle. With creativity. With intention. With heart. We don't stop. We swerve. Swrv. On the Go.",rgb:[0,255,255]},
+  {label:"TRANSMISSION 04/09 — MISSION LOG",narration:"Twenty years. Of real world experience. Not software. Not shortcuts. Not automation. Genuine care. Lived experience. A deep passion for helping people fulfill the purpose. God placed inside them.",rgb:[255,215,0]},
+  {label:"TRANSMISSION 05/09 — CAPABILITY MANIFEST",narration:"Photography. Videography. Original music. Jingles. Commercials. Radio shows. Podcasts. Vision and mission statements. One full service branding ecosystem. Built entirely. Around you.",rgb:[0,255,136]},
+  {label:"TRANSMISSION 06/09 — WORLD STATUS",narration:"The world has changed. Content creation is how the world speaks now. The entrepreneur. The pastor. The coach. The business owner. They are all artists. And every artist needs a brand. That is intentional. Authentic. Built to last.",rgb:[155,89,255]},
+  {label:"TRANSMISSION 07/09 — NAVIGATING UNKNOWN",narration:"When you don't know which way to go. You need more than a service. You need a guide. Someone who swerves with you. Around every obstacle. Every roadblock. Every unexpected detour.",rgb:[255,215,0]},
+  {label:"TRANSMISSION 08/09 — NAVIGATION LOCK",narration:"Swerve on roadblocks. Let love GPS. We navigate every challenge. With patience. With purpose. With a genuine investment in where you are trying to go. Because when love leads. Nothing. Can stop the mission.",rgb:[255,0,204]},
+  {label:"TRANSMISSION 09/09 — MISSION ACTIVE",narration:"Swrv On the Go. A full service branding ecosystem. Built entirely around you. We want the experience of building with you. The pleasure of serving you. We want to swerve in our gifts. Every step. Of the way.",rgb:[255,215,0]}
+];
+
+/* ═══════════════════════════════════════
+   CANVAS
+═══════════════════════════════════════ */
+const cvs=document.getElementById('art');
+const ctx=cvs.getContext('2d');
+let W=cvs.width=window.innerWidth, H=cvs.height=window.innerHeight;
+window.addEventListener('resize',()=>{W=cvs.width=window.innerWidth;H=cvs.height=window.innerHeight;});
+const sg=(c,b=18)=>{ctx.shadowColor=c;ctx.shadowBlur=b;};
+const ng=()=>{ctx.shadowBlur=0;};
+
+/* ═══════════════════════════════════════
+   STARFIELD
+═══════════════════════════════════════ */
+const STARS=Array.from({length:280},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.15+0.2,v:Math.random()*0.00012+0.00004,a:Math.random()*0.75+0.2,tw:Math.random()*Math.PI*2}));
+const SHOOTERS=[];
+setInterval(()=>{ if(SHOOTERS.length<3) SHOOTERS.push({x:Math.random()*W,y:Math.random()*H*0.5,vx:(Math.random()*3+2)*(Math.random()>0.5?1:-1),vy:Math.random()*1.5+0.8,life:1,dec:0.022}); },3500+Math.random()*2500);
+function drawStars(){
+  STARS.forEach(s=>{s.tw+=0.018;const a=s.a*(0.6+0.4*Math.sin(s.tw));ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(200,230,255,${a})`;ctx.fill();s.x=(s.x+s.v+1)%1;});
+  for(let i=SHOOTERS.length-1;i>=0;i--){const sh=SHOOTERS[i];sh.life-=sh.dec;if(sh.life<=0){SHOOTERS.splice(i,1);continue;}const mag=Math.sqrt(sh.vx**2+sh.vy**2),dx=sh.vx/mag,dy=sh.vy/mag;ctx.save();ctx.globalAlpha=sh.life;ctx.strokeStyle='rgba(200,230,255,0.85)';ctx.lineWidth=1.5;sg('rgba(180,220,255,0.7)',6);ctx.beginPath();ctx.moveTo(sh.x,sh.y);ctx.lineTo(sh.x-dx*80,sh.y-dy*80);ctx.stroke();ng();ctx.restore();sh.x+=sh.vx;sh.y+=sh.vy;}
+}
+
+/* ═══════════════════════════════════════
+   SCENE ART
+═══════════════════════════════════════ */
+const ROCKS=Array.from({length:9},()=>{const n=7+Math.floor(Math.random()*4),angles=Array.from({length:n},(_,i)=>(i/n)*Math.PI*2+(Math.random()-0.5)*0.4),radii=angles.map(()=>0.5+Math.random()*0.5);return{x:Math.random(),y:0.08+Math.random()*0.58,baseR:18+Math.random()*32,spd:(Math.random()-0.5)*0.00009,rot:Math.random()*Math.PI*2,rs:(Math.random()-0.5)*0.009,angles,radii};});
+function drawDebris(t){ROCKS.forEach((r,i)=>{r.x=(r.x+r.spd+1)%1;r.rot+=r.rs;ctx.save();ctx.translate(r.x*W,r.y*H);ctx.rotate(r.rot);ctx.beginPath();r.angles.forEach((a,j)=>{const pr=r.baseR*r.radii[j];j===0?ctx.moveTo(Math.cos(a)*pr,Math.sin(a)*pr):ctx.lineTo(Math.cos(a)*pr,Math.sin(a)*pr);});ctx.closePath();ctx.fillStyle='#120200';ctx.fill();ctx.strokeStyle='#FF4500';ctx.lineWidth=1.5;sg('#FF4500',10+6*Math.sin(t*0.002+i));ctx.stroke();ng();ctx.restore();});if(Math.sin(t*0.004)>0.96){ctx.fillStyle='rgba(255,30,0,0.03)';ctx.fillRect(0,0,W,H);}}
+function drawSatellite(t){const cx=W*0.5,cy=H*0.3;for(let i=0;i<60;i++){ctx.fillStyle=`rgba(0,100,140,${Math.random()*0.12})`;ctx.fillRect(Math.random()*W,Math.random()*H*0.65,Math.random()*3,1);}ctx.save();ctx.translate(cx,cy);ctx.rotate(Math.sin(t*0.0007)*0.025);const sc='rgba(0,120,180,0.35)';ctx.strokeStyle=sc;ctx.lineWidth=1.5;sg(sc,8);ctx.fillStyle='#0e1a28';ctx.fillRect(-28,-17,56,34);ctx.strokeRect(-28,-17,56,34);ctx.fillStyle='#080f18';ctx.fillRect(-100,-9,62,18);ctx.strokeRect(-100,-9,62,18);ctx.fillRect(38,-9,62,18);ctx.strokeRect(38,-9,62,18);ctx.strokeStyle='rgba(0,80,120,0.25)';for(let i=1;i<5;i++){ctx.beginPath();ctx.moveTo(-100+i*12,-9);ctx.lineTo(-100+i*12,9);ctx.stroke();ctx.beginPath();ctx.moveTo(38+i*12,-9);ctx.lineTo(38+i*12,9);ctx.stroke();}ctx.strokeStyle='rgba(0,190,255,0.55)';ctx.lineWidth=1.2;sg('rgba(0,190,255,0.55)',6);ctx.beginPath();ctx.moveTo(-88,60);ctx.lineTo(88,60);ctx.stroke();ng();ctx.restore();}
+function drawShip(t){const spd=0.000085,sx=(t*spd*W)%W,sy=H*0.32+Math.sin(t*0.0028)*H*0.14;for(let i=0;i<6;i++){const ly=H*(0.08+i*0.1),len=50+Math.random()*80,lx=(sx-80-Math.random()*180+W)%W;ctx.strokeStyle=`rgba(0,255,255,${0.06+Math.random()*0.1})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(lx-len,ly);ctx.stroke();}for(let i=1;i<28;i++){const pt=t-i*210,tx=(pt*spd*W+W)%W,ty=H*0.32+Math.sin(pt*0.0028)*H*0.14,a=(1-i/28)*0.5,r=(1-i/28)*4.5;ctx.beginPath();ctx.arc(tx,ty,r,0,Math.PI*2);ctx.fillStyle=`rgba(0,255,255,${a})`;sg('#00FFFF',6);ctx.fill();ng();}ctx.save();ctx.translate(sx,sy);const nsy=H*0.32+Math.sin((t+150)*0.0028)*H*0.14;ctx.rotate(Math.atan2(nsy-sy,12)*0.6);ctx.fillStyle='#00FFFF';sg('#00FFFF',22);ctx.beginPath();ctx.moveTo(16,0);ctx.lineTo(-10,-7);ctx.lineTo(-6,0);ctx.lineTo(-10,7);ctx.closePath();ctx.fill();ng();ctx.restore();}
+const ORBITS=[{r:62,sp:0.00085,col:'#FFD700',pr:5},{r:105,sp:0.00055,col:'#FFB800',pr:4},{r:150,sp:0.00032,col:'#FF9500',pr:3.5}];
+function drawOrbital(t){const cx=W*0.5,cy=H*0.3;ORBITS.forEach((o,i)=>{ctx.beginPath();ctx.ellipse(cx,cy,o.r,o.r*0.28,-0.15,0,Math.PI*2);ctx.strokeStyle='rgba(255,215,0,0.18)';ctx.lineWidth=1;sg('#FFD700',3);ctx.stroke();ng();const ang=t*o.sp*(i%2===0?1:-1),dx=cx+Math.cos(ang)*o.r,dy=cy+Math.sin(ang)*o.r*0.28;ctx.beginPath();ctx.arc(dx,dy,o.pr,0,Math.PI*2);ctx.fillStyle=o.col;sg(o.col,14);ctx.fill();ng();});const pulse=1+0.12*Math.sin(t*0.002),sgg=ctx.createRadialGradient(cx,cy,0,cx,cy,38*pulse);sgg.addColorStop(0,'#FFFDE0');sgg.addColorStop(0.2,'#FFD700');sgg.addColorStop(0.6,'rgba(255,184,0,0.4)');sgg.addColorStop(1,'transparent');ctx.beginPath();ctx.arc(cx,cy,38*pulse,0,Math.PI*2);ctx.fillStyle=sgg;sg('#FFD700',45);ctx.fill();ng();}
+const CNODES=[[0.12,0.12],[0.35,0.08],[0.62,0.12],[0.85,0.08],[0.22,0.28],[0.5,0.22],[0.75,0.28],[0.1,0.42],[0.38,0.38],[0.65,0.42],[0.9,0.38],[0.25,0.55],[0.55,0.52],[0.78,0.55]];
+const CCON=[[0,1],[1,2],[2,3],[0,4],[1,4],[1,5],[2,5],[2,6],[3,6],[4,7],[4,8],[5,8],[5,9],[6,9],[6,10],[7,11],[8,11],[8,12],[9,12],[9,13],[10,13]];
+function drawCircuit(t){const oy=H*0.04;CCON.forEach(([a,b])=>{const[ax,ay]=[CNODES[a][0]*W,oy+CNODES[a][1]*H*0.58],[bx,by]=[CNODES[b][0]*W,oy+CNODES[b][1]*H*0.58];ctx.strokeStyle='rgba(0,255,136,0.1)';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke();const p=(t*0.0015+a*0.3)%1,px=ax+(bx-ax)*p,py=ay+(by-ay)*p;ctx.beginPath();ctx.arc(px,py,2.5,0,Math.PI*2);ctx.fillStyle='#00FF88';sg('#00FF88',8);ctx.fill();ng();});CNODES.forEach(([nx,ny],i)=>{const x=nx*W,y=oy+ny*H*0.58,pulse=0.5+0.5*Math.sin(t*0.0025+i*0.6);ctx.beginPath();ctx.arc(x,y,4+pulse*3,0,Math.PI*2);ctx.fillStyle='#00FF88';sg('#00FF88',12+pulse*10);ctx.fill();ng();});}
+const NET=Array.from({length:28},()=>({x:Math.random(),y:Math.random()*0.62+0.04,vx:(Math.random()-0.5)*0.00018,vy:(Math.random()-0.5)*0.00018,col:['#9B59FF','#00FFFF','#FF00CC','#FFD700'][Math.floor(Math.random()*4)],r:2.5+Math.random()*3.5,ph:Math.random()*Math.PI*2}));
+function drawNetwork(){NET.forEach(n=>{n.x=(n.x+n.vx+1)%1;n.y=Math.max(0.04,Math.min(0.66,n.y+n.vy));if(n.y<=0.04||n.y>=0.66)n.vy*=-1;});NET.forEach((a,i)=>NET.forEach((b,j)=>{if(j<=i)return;const dx=(a.x-b.x)*W,dy=(a.y-b.y)*H,d=Math.sqrt(dx*dx+dy*dy);if(d<165){ctx.strokeStyle=`rgba(155,89,255,${(1-d/165)*0.28})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a.x*W,a.y*H);ctx.lineTo(b.x*W,b.y*H);ctx.stroke();}}));NET.forEach((n,i)=>{const pulse=0.7+0.3*Math.sin(Date.now()*0.003+n.ph);ctx.beginPath();ctx.arc(n.x*W,n.y*H,n.r*pulse,0,Math.PI*2);ctx.fillStyle=n.col;sg(n.col,9);ctx.fill();ng();});}
+function drawBeacon(t){const cx=W*0.5,cy=H*0.28;ctx.strokeStyle='rgba(255,215,0,0.055)';ctx.lineWidth=1;for(let i=0;i<=14;i++){ctx.beginPath();ctx.moveTo(i*W/14,0);ctx.lineTo(i*W/14,H*0.8);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*H*0.8/14);ctx.lineTo(W,i*H*0.8/14);ctx.stroke();}const ba=(t*0.001)%(Math.PI*2),bLen=Math.min(W,H)*0.38;ctx.save();ctx.translate(cx,cy);ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,bLen,ba-0.38,ba,false);ctx.closePath();const bg=ctx.createLinearGradient(0,0,Math.cos(ba-0.19)*bLen,Math.sin(ba-0.19)*bLen);bg.addColorStop(0,'rgba(255,215,0,0.35)');bg.addColorStop(1,'rgba(255,215,0,0)');ctx.fillStyle=bg;sg('#FFD700',18);ctx.fill();ng();ctx.restore();for(let i=0;i<5;i++){const rr=((t*0.045+i*44)%220);ctx.beginPath();ctx.arc(cx,cy,rr,0,Math.PI*2);ctx.strokeStyle=`rgba(255,215,0,${(1-rr/220)*0.38})`;ctx.lineWidth=1;sg('#FFD700',4);ctx.stroke();ng();}ctx.beginPath();ctx.arc(cx,cy,9,0,Math.PI*2);ctx.fillStyle='#FFD700';sg('#FFD700',35);ctx.fill();ng();}
+const HEART=Array.from({length:90},(_,i)=>{const th=(i/90)*Math.PI*2;return{hx:16*Math.pow(Math.sin(th),3),hy:-(13*Math.cos(th)-5*Math.cos(2*th)-2*Math.cos(3*th)-Math.cos(4*th)),ph:Math.random()*Math.PI*2};});
+function drawLoveGPS(t){const cx=W*0.5,cy=H*0.28,sc=Math.min(W,H)*0.013;ctx.strokeStyle='rgba(255,0,204,0.055)';ctx.lineWidth=1;for(let i=0;i<=14;i++){ctx.beginPath();ctx.moveTo(i*W/14,0);ctx.lineTo(i*W/14,H*0.75);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*H*0.75/14);ctx.lineTo(W,i*H*0.75/14);ctx.stroke();}for(let i=0;i<5;i++){const r=((t*0.038+i*44)%230);ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle=`rgba(255,0,204,${(1-r/230)*0.32})`;ctx.lineWidth=1;sg('#FF00CC',4);ctx.stroke();ng();}const pulse=1+0.07*Math.sin(t*0.002);HEART.forEach(pt=>{const x=cx+pt.hx*sc*pulse,y=cy+pt.hy*sc*pulse;ctx.beginPath();ctx.arc(x,y,2.8,0,Math.PI*2);ctx.fillStyle='#FF00CC';sg('#FF00CC',8);ctx.fill();ng();});const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,55);cg.addColorStop(0,'rgba(255,0,204,0.3)');cg.addColorStop(1,'transparent');ctx.beginPath();ctx.arc(cx,cy,55,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();}
+const NOVA=Array.from({length:130},()=>({ang:Math.random()*Math.PI*2,spd:0.25+Math.random()*1.6,r:2+Math.random()*3.5,life:Math.random(),dec:0.0018+Math.random()*0.0038,col:['#FFD700','#FFB800','#FF8C00','#FFF8DC','#FFFFFF'][Math.floor(Math.random()*5)]}));
+function drawNova(t){const cx=W*0.5,cy=H*0.28;NOVA.forEach(p=>{p.life-=p.dec;if(p.life<=0){p.life=1;p.ang=Math.random()*Math.PI*2;p.spd=0.25+Math.random()*1.6;}const dist=(1-p.life)*210,x=cx+Math.cos(p.ang)*dist,y=cy+Math.sin(p.ang)*dist;ctx.beginPath();ctx.arc(x,y,p.r*p.life,0,Math.PI*2);ctx.globalAlpha=p.life*0.85;ctx.fillStyle=p.col;sg(p.col,7);ctx.fill();ng();ctx.globalAlpha=1;});for(let i=0;i<3;i++){const ra=55+i*48,ang=t*0.0006*(i%2===0?1:-1);ctx.save();ctx.translate(cx,cy);ctx.rotate(ang);ctx.scale(1,0.3);ctx.beginPath();ctx.arc(0,0,ra,0,Math.PI*2);ctx.strokeStyle=`rgba(255,215,0,${0.32-i*0.07})`;ctx.lineWidth=1.5;sg('#FFD700',8);ctx.stroke();ng();ctx.restore();}const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,52);cg.addColorStop(0,'rgba(255,255,220,0.92)');cg.addColorStop(0.25,'rgba(255,215,0,0.65)');cg.addColorStop(1,'transparent');ctx.beginPath();ctx.arc(cx,cy,52,0,Math.PI*2);ctx.fillStyle=cg;sg('#FFD700',40);ctx.fill();ng();}
+
+/* ═══════════════════════════════════════
+   RENDER LOOP
+═══════════════════════════════════════ */
+let curIdx=0;
+const DRAWERS=[drawDebris,drawSatellite,drawShip,drawOrbital,drawCircuit,drawNetwork,drawBeacon,drawLoveGPS,drawNova];
+let T0=Date.now();
+
+function drawBg(idx){const[r,g_,b]=SCENES[idx].rgb;ctx.fillStyle='#000008';ctx.fillRect(0,0,W,H);const bg=ctx.createRadialGradient(W*0.5,H*0.38,0,W*0.5,H*0.38,Math.max(W,H)*0.72);bg.addColorStop(0,`rgba(${r},${g_},${b},0.11)`);bg.addColorStop(0.55,`rgba(${Math.floor(r*0.18)},${Math.floor(g_*0.18)},${Math.floor(b*0.18)},0.07)`);bg.addColorStop(1,'rgba(0,0,8,0)');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);}
+function drawGrad(){const gr=ctx.createLinearGradient(0,H*0.42,0,H);gr.addColorStop(0,'transparent');gr.addColorStop(0.45,'rgba(0,0,8,0.65)');gr.addColorStop(1,'rgba(0,0,8,0.97)');ctx.fillStyle=gr;ctx.fillRect(0,0,W,H);}
+
+let bgOnly=true;
+function render(){
+  const t=Date.now()-T0;
+  ctx.clearRect(0,0,W,H);
+  drawBg(curIdx);
+  drawStars();
+  if(!bgOnly&&DRAWERS[curIdx]) DRAWERS[curIdx](t);
+  drawGrad();
+  requestAnimationFrame(render);
+}
+render();
+
+/* ═══════════════════════════════════════
+   SPEECH  —  OPENAI ONYX CINEMATIC NARRATOR
+   Primary:  pre-generated MP3s via OpenAI tts-1-hd "onyx" voice
+             (deep, authoritative, movie-trailer grade)
+   Fallback: Web Speech API if MP3s haven't been generated yet
+             Run: OPENAI_API_KEY=sk-... node scripts/generate-narration.mjs
+═══════════════════════════════════════ */
+const WBS=[document.getElementById('w1'),document.getElementById('w2'),document.getElementById('w3'),document.getElementById('w4'),document.getElementById('w5')];
+const AL=document.getElementById('audio-label');
+function setWave(on){WBS.forEach(w=>w.classList.toggle('off',!on));AL.textContent=on?'VOICE ACTIVE':'STANDBY';}
+
+// Active Audio element so we can stop it mid-playback
+let activeAudio=null;
+
+function speak(text,onEnd,sceneIdx){
+  stopSpeak();
+
+  // ── Primary: pre-generated MP3 (OpenAI onyx voice) ──────────────────
+  if(sceneIdx!==undefined){
+    const audio=new Audio(`/audio/narration-${sceneIdx}.mp3`);
+    activeAudio=audio;
+
+    // BUG FIX: both onerror and play().catch fire when MP3 is missing.
+    // Guard ensures speakFallback is only called once.
+    let fallbackFired=false;
+    const tryFallback=()=>{
+      if(fallbackFired) return;
+      fallbackFired=true;
+      activeAudio=null;
+      setWave(false);
+      speakFallback(text,onEnd);
+    };
+
+    audio.onplay  =()=>setWave(true);
+    audio.onended =()=>{ setWave(false); activeAudio=null; if(onEnd) setTimeout(onEnd,1900); };
+    audio.onerror =tryFallback;
+    audio.play().catch(tryFallback);
+    return;
+  }
+
+  speakFallback(text,onEnd);
+}
+
+// ── Fallback: Web Speech API (used only if MP3s not yet generated) ────
+let voices=[];
+const loadV=()=>{ voices=speechSynthesis.getVoices(); };
+loadV();
+if(speechSynthesis.onvoiceschanged!==undefined) speechSynthesis.onvoiceschanged=loadV;
+
+function pickVoice(){
+  const preferred=['Google UK English Male','Microsoft George','Microsoft David','Daniel','Alex','Fred'];
+  for(const name of preferred){
+    const v=voices.find(v=>v.name.includes(name)&&v.lang.startsWith('en'));
+    if(v) return v;
+  }
+  return voices.find(v=>v.lang.startsWith('en'))||null;
+}
+
+function speakFallback(text,onEnd){
+  // Estimated scene duration so we never advance faster than readable
+  const sceneDur=estMs(text);
+
+  if(!window.speechSynthesis){
+    // No TTS at all — wait the proper scene duration before advancing
+    setWave(false);
+    if(onEnd) setTimeout(onEnd,sceneDur+1900);
+    return;
+  }
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.rate=0.72; u.pitch=0.50; u.volume=1;
+  const v=pickVoice(); if(v) u.voice=v;
+
+  // Safety timer: if the browser silently drops the speech request
+  // (common in iframes / some mobile browsers), advance after scene duration.
+  let safetyTimer=setTimeout(()=>{
+    setWave(false);
+    if(onEnd) setTimeout(onEnd,1900);
+  }, sceneDur+2500);
+
+  u.onstart =()=>setWave(true);
+  u.onend   =()=>{ clearTimeout(safetyTimer); setWave(false); if(onEnd) setTimeout(onEnd,1900); };
+  u.onerror =()=>{ clearTimeout(safetyTimer); setWave(false);
+    // Don't advance in 600ms — wait the actual scene duration
+    if(onEnd) setTimeout(onEnd,sceneDur+1000);
+  };
+  speechSynthesis.speak(u);
+}
+
+function stopSpeak(){
+  if(activeAudio){ activeAudio.pause(); activeAudio.currentTime=0; activeAudio=null; }
+  if(window.speechSynthesis) speechSynthesis.cancel();
+  setWave(false);
+}
+
+/* ═══════════════════════════════════════
+   SCENE MANAGEMENT
+═══════════════════════════════════════ */
+let current=0,paused=false,pending=null;
+const scenes=document.querySelectorAll('.scene');
+const capBar=document.getElementById('cap-bar'),capLbl=document.getElementById('cap-label'),capTxt=document.getElementById('cap-text');
+const counter=document.getElementById('counter'),progFill=document.getElementById('prog-fill');
+const dotsEl=document.getElementById('dots'),timeDis=document.getElementById('time-display');
+
+SCENES.forEach((_,i)=>{const d=document.createElement('div');d.className='dot'+(i===0?' on':'');d.addEventListener('click',()=>goTo(i));dotsEl.appendChild(d);});
+function updateDots(){dotsEl.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===current));}
+function estMs(text,rate=0.72){return(text.trim().split(/\s+/).length/160*rate)*60000;}
+
+let progTimer=null,progStart=0,progDur=0;
+function startProg(ms){clearInterval(progTimer);progFill.style.width='0%';progStart=Date.now();progDur=ms;progTimer=setInterval(()=>{if(!paused){progFill.style.width=Math.min((Date.now()-progStart)/progDur*100,100)+'%';}else{progStart=Date.now()-(parseFloat(progFill.style.width)/100*progDur);}},60);}
+
+setInterval(()=>{const s=Math.floor((Date.now()-T0)/1000);timeDis.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');},1000);
+
+function showScene(idx){scenes.forEach(s=>s.classList.remove('active'));scenes[idx].classList.add('active');curIdx=idx;counter.textContent=String(idx+1).padStart(2,'0')+' / '+String(SCENES.length).padStart(2,'0');updateDots();capBar.style.opacity='0';setTimeout(()=>{capLbl.textContent=SCENES[idx].label;capTxt.textContent=SCENES[idx].narration;capBar.style.opacity='1';},320);}
+
+function playScene(idx){stopSpeak();clearTimeout(pending);showScene(idx);startProg(estMs(SCENES[idx].narration)+1900);if(!paused)speak(SCENES[idx].narration,()=>{if(!paused)pending=setTimeout(()=>{if(!paused)next();},200);},idx);}
+
+function next(){if(current<SCENES.length-1){current++;playScene(current);}else{clearInterval(progTimer);progFill.style.width='100%';stopSpeak();}}
+function prev(){stopSpeak();clearTimeout(pending);if(current>0)current--;playScene(current);}
+function goTo(idx){stopSpeak();clearTimeout(pending);current=idx;playScene(current);}
+function togglePause(){paused=!paused;document.getElementById('btn-pause').textContent=paused?'▶ PLAY':'⏸ PAUSE';if(paused){stopSpeak();clearTimeout(pending);}else{speak(SCENES[current].narration,()=>{if(!paused)pending=setTimeout(()=>{if(!paused)next();},200);},current);}}
+function replay(){paused=false;document.getElementById('btn-pause').textContent='⏸ PAUSE';current=0;T0=Date.now();playScene(0);}
+
+document.getElementById('btn-prev').addEventListener('click',prev);
+document.getElementById('btn-pause').addEventListener('click',togglePause);
+document.getElementById('btn-next').addEventListener('click',()=>{stopSpeak();clearTimeout(pending);if(current<SCENES.length-1){current++;playScene(current);}});
+document.getElementById('btn-replay').addEventListener('click',replay);
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'){stopSpeak();clearTimeout(pending);if(current<SCENES.length-1){current++;playScene(current);}}
+  if(e.key==='ArrowLeft')prev();
+  if(e.key===' '){e.preventDefault();togglePause();}
+  if(e.key==='r'||e.key==='R')replay();
+});
+
+/* ═══════════════════════════════════════
+   START SCREEN
+═══════════════════════════════════════ */
+const startEl=document.getElementById('start');
+startEl.addEventListener('click',()=>{
+  startEl.style.opacity='0';
+  setTimeout(()=>startEl.style.display='none',800);
+  bgOnly=false;
+  T0=Date.now();
+  playScene(0);
+});
+</script>
+</body>
+</html>

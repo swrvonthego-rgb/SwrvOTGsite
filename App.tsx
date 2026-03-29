@@ -8,6 +8,7 @@ import { Footer } from './components/Footer';
 import { ConsultationWizard } from './components/ConsultationWizard';
 import { WebsiteVisionGenerator } from './components/WebsiteVisionGenerator';
 import { Play } from 'lucide-react';
+import { BrandTransmission } from './components/BrandTransmission';
 
 const App: React.FC = () => {
   const [isWizardOpen, setIsWizardOpen] = useState(false);
@@ -43,6 +44,7 @@ const App: React.FC = () => {
           onOpenVisionGenerator={() => setIsVisionGeneratorOpen(true)}
         />
         <Services />
+        <BrandTransmission />
         <Stats />
       </main>
 
