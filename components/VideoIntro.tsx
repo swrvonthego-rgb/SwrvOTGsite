@@ -77,9 +77,8 @@ export const VideoIntro: React.FC = () => {
         ref={containerRef} 
         className="relative w-full max-w-[480px] aspect-video rounded-xl overflow-hidden shadow-2xl border border-white/10 bg-black/50 my-8"
       >
-        {/* TODO: upload SWRV_WEB_4k_gifq4n.mp4 to Cloudinary and replace src below */}
         <video
-          src="https://res.cloudinary.com/dqm5ehvto/video/upload/SWRV_WEB_4k_gifq4n.mp4"
+          src="https://res.cloudinary.com/dastq6bk5/video/upload/v1775906948/SWRV_WEB_4k_gifq4n_u5zwta.mp4"
           autoPlay
           muted
           loop

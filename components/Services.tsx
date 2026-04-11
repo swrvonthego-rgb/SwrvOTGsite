@@ -63,7 +63,7 @@ export const Services: React.FC = () => {
             <div className="md:col-span-2 flex flex-col items-center">
               <a href="https://swrvbirdsong.netlify.app/" target="_blank" rel="noopener noreferrer" className="block group">
                 <img
-                  src="/media/1752950982581945_2_kk3jt3.png"
+                  src="https://res.cloudinary.com/dastq6bk5/image/upload/v1775906943/1752950982581945_2_kk3jt3_ui7upw.png"
                   alt="Meet the leader of the revolution"
                   style={{ width: '100%', maxWidth: 380, display: 'block', border: '2.5px solid #D4572A', boxShadow: '0 16px 48px 0 rgba(10,8,4,0.16)', borderRadius: '18px' }}
                   className="transition-transform duration-300 group-hover:scale-105 mx-auto"

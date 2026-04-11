@@ -38,7 +38,7 @@ export const AutoServices: React.FC = () => {
       <div className="relative w-full h-screen">
         <video
           ref={videoRef}
-          src="https://res.cloudinary.com/dqm5ehvto/video/upload/v1773865051/copy_506106AC-E7D2-4CDF-A553-6E2DC5A6894F_ckn5nm.mov"
+          src="https://res.cloudinary.com/dastq6bk5/video/upload/v1775906956/copy_506106AC-E7D2-4CDF-A553-6E2DC5A6894F_ckn5nm_cynppw.mov"
           className="w-full h-full object-cover"
           autoPlay
           muted
