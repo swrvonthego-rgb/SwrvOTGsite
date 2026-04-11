@@ -4,6 +4,16 @@ export interface Service {
   icon: string;
 }
 
+export interface ExecutionService {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  price: number;
+  recommended?: boolean;
+  reasoning?: string;
+}
+
 export interface Question {
   id: string;
   category: string;
@@ -15,5 +25,6 @@ export interface Question {
 export interface NavItem {
   label: string;
   href: string;
+  target?: string;
   children?: NavItem[];
 }

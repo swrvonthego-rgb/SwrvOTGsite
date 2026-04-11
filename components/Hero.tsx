@@ -26,17 +26,17 @@ const column1Cards: HeroCardData[] = [
     subtitle: "INTERIOR DESIGN" 
   },
   { 
-    image: "https://res.cloudinary.com/dqm5ehvto/image/upload/v1773071206/main-sample.png", 
+    image: "/media/main-sample.png", 
     title: "PET LOVERS", 
     subtitle: "COMMUNITY" 
   },
   { 
-    image: "https://res.cloudinary.com/dqm5ehvto/image/upload/v1773071197/samples/balloons.jpg", 
+    image: "/media/balloons.jpg", 
     title: "TRAVELERS", 
     subtitle: "EXPLORATION" 
   },
   { 
-    image: "https://res.cloudinary.com/dqm5ehvto/image/upload/v1773071196/samples/shoe.jpg", 
+    image: "/media/shoe.jpg", 
     title: "FASHION DESIGNERS", 
     subtitle: "STYLE" 
   },
@@ -59,12 +59,12 @@ const column2Cards: HeroCardData[] = [
     subtitle: "CREATIVE" 
   },
   { 
-    image: "https://res.cloudinary.com/dqm5ehvto/image/upload/v1773071201/samples/man-portrait.jpg", 
+    image: "/media/man-portrait.jpg", 
     title: "CONTENT CREATORS", 
     subtitle: "DIGITAL MEDIA" 
   },
   { 
-    image: "https://res.cloudinary.com/dqm5ehvto/image/upload/v1773071203/samples/woman-on-a-football-field.jpg", 
+    image: "/media/woman-on-a-football-field.jpg", 
     title: "SUPER-DOPE PEOPLE", 
     subtitle: "LIFESTYLE" 
   },
@@ -96,7 +96,7 @@ const HeroCard: React.FC<{ image?: string; video?: string; title: string; subtit
   </div>
 );
 
-export const Hero: React.FC<{ onOpenConsultation: () => void; onOpenVisionGenerator: () => void }> = ({ onOpenConsultation, onOpenVisionGenerator }) => {
+export const Hero: React.FC<{ onOpenConsultation: () => void }> = ({ onOpenConsultation }) => {
   return (
     <section id="hero-section" className="relative min-h-screen bg-[#050505] pt-32 pb-20 overflow-hidden flex items-center">
       
@@ -125,8 +125,9 @@ export const Hero: React.FC<{ onOpenConsultation: () => void; onOpenVisionGenera
         <div className="text-left space-y-12 relative">
            
           <div className="relative">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-none tracking-tighter drop-shadow-2xl text-white">
-              Zion <span className="text-lion-orange">SWRV</span> Birdsong. <br/> Headquarters.
+            <h1 className="font-extrabold leading-none tracking-tighter drop-shadow-2xl">
+              <span className="block text-lion-orange" style={{fontSize:'clamp(5rem,16vw,11rem)',lineHeight:1}}>SWRV</span>
+              <span className="block text-white text-4xl md:text-5xl lg:text-6xl mt-2">HEADQUARTERS.</span>
             </h1>
             
             <div className="mt-6 flex items-center gap-4 animate-in fade-in slide-in-from-left-8 duration-1000 delay-300 fill-mode-both">
@@ -151,16 +152,6 @@ export const Hero: React.FC<{ onOpenConsultation: () => void; onOpenVisionGenera
           </div>
           
           <VideoIntro />
-          
-           <div className="flex gap-4">
-             <button onClick={onOpenConsultation} className="group relative bg-lion-orange text-white px-8 py-4 font-bold uppercase tracking-widest text-sm hover:bg-white hover:text-lion-orange transition-all duration-300 rounded-sm shadow-[0_0_20px_rgba(255,77,0,0.4)] hover:shadow-[0_0_40px_rgba(255,77,0,0.8)] border border-lion-orange overflow-hidden">
-                <span className="relative z-10">Start Your Journey</span>
-                <div className="absolute inset-0 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out z-0"></div>
-             </button>
-             <button onClick={onOpenVisionGenerator} className="group relative bg-transparent text-white px-8 py-4 font-bold uppercase tracking-widest text-sm hover:bg-white/10 transition-all duration-300 rounded-sm border border-white/20 overflow-hidden flex items-center gap-2">
-                <span className="relative z-10">Generate Site Vision</span>
-             </button>
-           </div>
         </div>
 
         {/* Right: "Bento" Grid Animation */}

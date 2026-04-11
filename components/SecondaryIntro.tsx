@@ -1,14 +1,14 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Volume2, VolumeX, Maximize, Minimize, RotateCcw, X } from 'lucide-react';
 
-export const SecondaryIntro: React.FC = () => {
+export const SecondaryIntro: React.FC<{ skipIntro?: boolean }> = ({ skipIntro = false }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState<'waiting' | 'playing' | 'ended'>('waiting');
   const [isMuted, setIsMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isCinematic, setIsCinematic] = useState(false);
-  const [isDismissed, setIsDismissed] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(skipIntro);
 
   const handleDismiss = () => {
     if (videoRef.current) videoRef.current.pause();

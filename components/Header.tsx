@@ -22,7 +22,6 @@ export const Header: React.FC = () => {
         <a href="https://trainbyob.me" target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold text-gray-300 hover:text-white tracking-wider uppercase">Train BYOB</a>
         <a href="#books" className="text-[10px] font-bold text-gray-300 hover:text-white tracking-wider uppercase">Books</a>
         <a href="#podcast" className="text-[10px] font-bold text-gray-300 hover:text-white tracking-wider uppercase">Podcast</a>
-        <div className="text-lion-orange font-bold italic text-lg pr-4 border-r border-gray-700 leading-none">Zion SWRV Birdsong</div>
         
         <div className="flex items-center">
             <button className="flex items-center gap-1 bg-lion-orange text-white px-3 py-1 text-[11px] font-bold rounded-sm hover:bg-[#FF6020] transition-colors">
@@ -37,14 +36,14 @@ export const Header: React.FC = () => {
         <div className="container mx-auto px-4 md:px-8 flex justify-between items-center h-full">
           
           {/* Logo */}
-          <div className="flex items-center z-50 cursor-pointer">
+          <a href="#swrv-ecosystem" className="flex items-center z-50 cursor-pointer hover:opacity-80 transition-opacity">
             <img 
               src="https://res.cloudinary.com/dzqxce5hv/image/upload/v1772222265/Swerve_Badge_eow6m0.png" 
               alt="Swrv On The Go Logo" 
               className="h-10 md:h-12 w-auto object-contain"
               referrerPolicy="no-referrer"
             />
-          </div>
+          </a>
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-8">
@@ -52,6 +51,8 @@ export const Header: React.FC = () => {
               <a 
                 key={item.label} 
                 href={item.href}
+                target={item.target}
+                rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
                 className="text-[13px] font-bold text-white hover:text-lion-orange transition-colors tracking-wide"
               >
                 {item.label}
@@ -84,6 +85,8 @@ export const Header: React.FC = () => {
                 <a 
                   key={item.label} 
                   href={item.href}
+                  target={item.target}
+                  rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
                   className="text-xl font-bold text-white hover:text-lion-orange"
                   onClick={() => setMobileMenuOpen(false)}
                 >

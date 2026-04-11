@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Play, X } from 'lucide-react';
 
 export const BrandTransmission: React.FC = () => {
   const [open, setOpen] = useState(false);
 
+  // Close the modal automatically when the transmission finishes
+  useEffect(() => {
+    const handler = (e: MessageEvent) => {
+      if (e.data?.type === 'TRANSMISSION_COMPLETE') {
+        setOpen(false);
+        setTimeout(() => {
+          document.getElementById('ecosystem')?.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+      }
+    };
+    window.addEventListener('message', handler);
+    return () => window.removeEventListener('message', handler);
+  }, []);
+
   return (
     <>
       {/* ── Section ── */}
-      <section className="relative bg-black overflow-hidden py-28 px-6 flex flex-col items-center text-center">
+      <section id="swrv-ecosystem" className="relative bg-black overflow-hidden py-28 px-6 flex flex-col items-center text-center">
 
         {/* Subtle scanline texture */}
         <div
@@ -32,7 +46,7 @@ export const BrandTransmission: React.FC = () => {
           className="relative z-10 mb-5 text-xs tracking-[0.5em] uppercase"
           style={{ fontFamily: "'Share Tech Mono', monospace", color: 'rgba(0,255,255,0.55)' }}
         >
-          // BRAND TRANSMISSION
+          // THE SWRV ECOSYSTEM
         </p>
 
         {/* Headline */}
@@ -41,18 +55,18 @@ export const BrandTransmission: React.FC = () => {
           style={{
             fontFamily: "'Orbitron', sans-serif",
             fontSize: 'clamp(2.2rem, 7vw, 5.5rem)',
-            color: '#FFD700',
-            textShadow: '0 0 30px rgba(255,215,0,0.5), 0 0 60px rgba(255,215,0,0.2)',
+            color: '#FF4D00',
+            textShadow: '0 0 30px rgba(255,77,0,0.5), 0 0 60px rgba(255,77,0,0.2)',
             letterSpacing: '0.04em',
           }}
         >
-          THE SWRV STORY
+          SWRV ECOSYSTEM
         </h2>
 
         {/* Rule */}
         <div
           className="relative z-10 mb-6"
-          style={{ width: 80, height: 1, background: '#FFD700', boxShadow: '0 0 8px #FFD700' }}
+          style={{ width: 80, height: 1, background: '#FF4D00', boxShadow: '0 0 8px #FF4D00' }}
         />
 
         {/* Sub copy */}
@@ -95,6 +109,9 @@ export const BrandTransmission: React.FC = () => {
           Initiate Transmission
         </button>
 
+        {/* Meet the Artist link */}
+        {/* Meet the Artist link removed as requested */}
+
         {/* Corner HUD accents */}
         <span className="pointer-events-none absolute top-6 left-6 w-5 h-5 border-t border-l" style={{ borderColor: 'rgba(0,255,255,0.3)' }} />
         <span className="pointer-events-none absolute top-6 right-6 w-5 h-5 border-t border-r" style={{ borderColor: 'rgba(0,255,255,0.3)' }} />
@@ -134,7 +151,8 @@ export const BrandTransmission: React.FC = () => {
 
           {/* The full brand transmission experience in an iframe */}
           <iframe
-            src="/brand-transmission.html"
+            key={open}
+            src={`/brand-transmission.html?t=${Date.now()}`}
             title="Swrv On-The-Go — Brand Transmission"
             className="w-full h-full border-0"
             allow="autoplay; speech-synthesis; microphone"

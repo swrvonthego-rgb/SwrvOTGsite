@@ -78,7 +78,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000008; }
 .sub { font-family:var(--fh); font-size:clamp(1rem,3.5vw,2.6rem); font-weight:700; line-height:1.25; animation:fadeUp 0.85s ease both; animation-delay:0.3s; }
 .copy { font-family:var(--fm); font-size:clamp(0.7rem,1.5vw,0.88rem); line-height:2.1; color:var(--dim); max-width:580px; margin-top:14px; animation:fadeUp 0.8s ease both; animation-delay:0.45s; }
 .rule { height:1px; width:0; margin:14px auto; animation:ruleGrow 0.8s ease both; animation-delay:0.3s; }
-.stat { font-family:var(--fh); font-size:clamp(4rem,14vw,11rem); font-weight:900; line-height:1; letter-spacing:-0.02em; animation:fadeUp 0.9s ease both; animation-delay:0.1s; }
+.stat { font-family:var(--fh); font-size:clamp(3.5rem,12vw,9rem); font-weight:900; line-height:1; letter-spacing:-0.02em; margin-bottom:16px; animation:fadeUp 0.9s ease both; animation-delay:0.1s; }
 
 /* Neon colors */
 .cyan    { color:var(--cyan);    text-shadow:0 0 18px var(--cyan),   0 0 36px rgba(0,255,255,0.35); }
@@ -192,7 +192,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000008; }
 <!-- HUD TOP -->
 <div id="hud-top">
   <div class="hud-txt">SWRV//OS <span class="hi">v2.0.25</span> <span class="hi blink">▊</span></div>
-  <div class="hud-txt" id="counter">01 / 09</div>
+  <div class="hud-txt" id="counter">01 / 07</div>
   <div class="hud-txt">SIGNAL: <span class="hi">LOCKED</span></div>
 </div>
 
@@ -202,15 +202,30 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000008; }
 <!-- SCENES -->
 <div id="stage">
 
-  <!-- S0: ROADBLOCKS -->
+  <!-- SLIDE 1: EVERYONE IS AN ARTIST —— opens the whole story -->
   <div class="scene" data-idx="0">
-    <div class="scene-tag">// SYSTEM ALERT — THREAT DETECTED</div>
-    <h1 class="hl red glitch" data-g="ROADBLOCKS." style="font-size:clamp(2.5rem,10vw,8.5rem)">ROADBLOCKS.</h1>
-    <div class="rule r-red"></div>
-    <p class="copy">They come for everyone.<br>No matter how prepared, how talented, or how driven you are.</p>
+    <div class="scene-tag">// WORLD STATUS — UPDATED</div>
+    <h2 class="sub white" style="animation-delay:0.08s">The world has changed.</h2>
+    <h1 class="hl violet" style="animation-delay:0.22s;font-size:clamp(1.3rem,4.5vw,3.2rem)">ALMOST EVERYONE<br>IS AN ARTIST.</h1>
+    <div class="rule r-mag" style="animation-delay:0.4s"></div>
+    <div class="tags">
+      <span class="tag" style="animation-delay:0.44s">The Musician</span>
+      <span class="tag" style="animation-delay:0.52s">The Chef</span>
+      <span class="tag" style="animation-delay:0.60s">The Pastor</span>
+      <span class="tag" style="animation-delay:0.68s">The Dancer</span>
+      <span class="tag" style="animation-delay:0.76s">The Coach</span>
+      <span class="tag" style="animation-delay:0.84s">The Developer</span>
+      <span class="tag" style="animation-delay:0.92s">The Athlete</span>
+      <span class="tag" style="animation-delay:1.00s">The Stylist</span>
+      <span class="tag" style="animation-delay:1.08s">The Realtor</span>
+      <span class="tag" style="animation-delay:1.16s">The Business Owner</span>
+      <span class="tag" style="animation-delay:1.24s">The Content Creator</span>
+      <span class="tag" style="animation-delay:1.32s">The Movement</span>
+    </div>
+    <p class="copy" style="animation-delay:1.5s">Every artist needs an ecosystem — <span style="color:var(--violet)">intentional, authentic, built entirely around their vision.</span></p>
   </div>
 
-  <!-- S1: AGENCIES STOP -->
+  <!-- SLIDE 2: AGENCIES —— most companies treat you like a ticket -->
   <div class="scene" data-idx="1">
     <div class="scene-tag">// STANDARD PROTOCOL — LOGGED</div>
     <h2 class="sub white" style="animation-delay:0.05s">Most agencies</h2>
@@ -219,25 +234,26 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000008; }
     <p class="copy">Complete the transaction. Close the ticket. Move on.<br><span style="color:rgba(255,69,0,0.85)">You are not a transaction to us.</span></p>
   </div>
 
-  <!-- S2: WE SWERVE -->
+  <!-- SLIDE 3: MORE THAN A SERVICE —— guide who builds with you -->
   <div class="scene" data-idx="2">
-    <div class="scene-tag">// ALTERNATE TRAJECTORY ENGAGED</div>
-    <p class="sub" style="color:rgba(0,255,255,0.55);font-size:clamp(0.9rem,2.4vw,1.5rem);animation-delay:0.05s">We don't stop.</p>
-    <h1 class="hl cyan glitch" data-g="WE SWERVE." style="font-size:clamp(2.5rem,10vw,8.5rem)">WE SWERVE.</h1>
-    <div class="rule r-cyan"></div>
-    <h2 class="sub gold" style="font-size:clamp(0.9rem,2.8vw,2rem);animation-delay:0.5s">Swrv On-The-Go</h2>
-  </div>
-
-  <!-- S3: 20+ YEARS -->
-  <div class="scene" data-idx="3">
-    <div class="scene-tag">// MISSION LOG — ELAPSED CYCLES</div>
-    <div class="stat gold">20+</div>
-    <p style="font-family:var(--fm);font-size:clamp(0.55rem,1.4vw,0.8rem);letter-spacing:0.32em;text-transform:uppercase;color:rgba(255,215,0,0.6);animation:fadeUp 0.8s ease both;animation-delay:0.2s">YEARS OF REAL-WORLD EXPERIENCE</p>
+    <div class="scene-tag">// NAVIGATING UNKNOWN SPACE</div>
+    <h2 class="sub white" style="animation-delay:0.08s;font-size:clamp(1.1rem,3.5vw,2.6rem)">You need</h2>
+    <h1 class="hl gold" style="animation-delay:0.22s">MORE THAN<br>A SERVICE.</h1>
     <div class="rule r-gold"></div>
-    <p class="copy">Not software. Not shortcuts. Not automation.<br><span style="color:var(--gold)">Genuine care. Lived experience. Your purpose.</span></p>
+    <p class="copy" style="animation-delay:0.5s">You need a guide who <span style="color:var(--cyan)">swerves with you</span><br>around every obstacle. We don't just build brands.<br><span style="color:var(--gold)">We build with you.</span></p>
   </div>
 
-  <!-- S4: SERVICES -->
+  <!-- SLIDE 4: WE SWERVE ON THE GO -->
+  <div class="scene" data-idx="3">
+    <div class="scene-tag">// ALTERNATE TRAJECTORY ENGAGED</div>
+    <p class="sub" style="color:rgba(0,255,255,0.55);font-size:clamp(0.9rem,2.4vw,1.5rem);animation-delay:0.05s">We swerve on roadblocks.</p>
+    <h1 class="hl cyan glitch" data-g="WE SWERVE" style="font-size:clamp(2.5rem,9vw,7.5rem)">WE SWERVE</h1>
+    <h2 class="sub gold" style="font-size:clamp(1.4rem,5vw,4rem);animation-delay:0.38s;letter-spacing:0.12em">ON THE GO</h2>
+    <div class="rule r-cyan" style="animation-delay:0.55s"></div>
+    <p class="copy" style="animation-delay:0.72s">Navigating every obstacle.<br>With creativity. With intention. With heart.<br><span style="color:var(--gold)">We don't stop. We Swerve On The Go.</span></p>
+  </div>
+
+  <!-- SLIDE 5: CAPABILITIES —— the full ecosystem -->
   <div class="scene" data-idx="4">
     <div class="scene-tag">// CAPABILITY MANIFEST — FULL SUITE</div>
     <ul class="svc-list">
@@ -250,47 +266,22 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000008; }
     <p class="copy" style="animation-delay:1s;color:var(--green)">// FULL-SERVICE BRANDING ECOSYSTEM</p>
   </div>
 
-  <!-- S5: EVERYONE IS A CREATOR -->
+  <!-- SLIDE 6: 20+ YEARS —— proven legacy -->
   <div class="scene" data-idx="5">
-    <div class="scene-tag">// WORLD STATUS — UPDATED</div>
-    <h2 class="sub white" style="animation-delay:0.08s">Almost everyone</h2>
-    <h1 class="hl violet" style="animation-delay:0.22s">IS AN ARTIST.</h1>
-    <div class="tags">
-      <span class="tag" style="animation-delay:0.42s">The Entrepreneur</span>
-      <span class="tag" style="animation-delay:0.54s">The Pastor</span>
-      <span class="tag" style="animation-delay:0.66s">The Coach</span>
-      <span class="tag" style="animation-delay:0.78s">The Business Owner</span>
-      <span class="tag" style="animation-delay:0.9s">The Content Creator</span>
-      <span class="tag" style="animation-delay:1.02s">The Movement</span>
-    </div>
-  </div>
-
-  <!-- S6: YOU NEED MORE -->
-  <div class="scene" data-idx="6">
-    <div class="scene-tag">// NAVIGATING UNKNOWN SPACE</div>
-    <h2 class="sub white" style="animation-delay:0.08s;font-size:clamp(1.1rem,3.5vw,2.6rem)">You need</h2>
-    <h1 class="hl gold" style="animation-delay:0.22s">MORE THAN<br>A SERVICE.</h1>
+    <div class="scene-tag">// MISSION LOG — LEGACY ACTIVE</div>
+    <div class="stat gold">20+</div>
+    <p style="font-family:var(--fm);font-size:clamp(0.55rem,1.4vw,0.8rem);letter-spacing:0.32em;text-transform:uppercase;color:rgba(255,215,0,0.6);animation:fadeUp 0.8s ease both;animation-delay:0.2s">YEARS DOING AMAZING THINGS</p>
     <div class="rule r-gold"></div>
-    <p class="copy" style="animation-delay:0.5s">You need a guide who <span style="color:var(--cyan)">swerves with you</span><br>around every obstacle.</p>
+    <p class="copy">Not software. Not shortcuts. Not automation.<br><span style="color:var(--gold)">Real care. Real work. Real results — for over two decades.</span></p>
   </div>
 
-  <!-- S7: LOVE GPS -->
-  <div class="scene" data-idx="7">
+  <!-- SLIDE 7: SWERVE ON ROADBLOCKS / LET LOVE GPS -->
+  <div class="scene" data-idx="6">
     <div class="scene-tag">// NAVIGATION SYSTEM — LOCKED ON</div>
     <span class="tl white" style="font-size:clamp(1.3rem,4.5vw,3.6rem);animation-delay:0.1s">Swerve on Roadblocks.</span>
     <span class="tl magenta" style="font-size:clamp(1.6rem,6vw,5rem);animation-delay:0.32s">LET LOVE GPS.</span>
     <div class="rule r-mag" style="animation-delay:0.55s"></div>
     <p class="copy" style="animation-delay:0.68s">Every challenge. Every detour.<br><span style="color:var(--magenta)">Love keeps us on course.</span></p>
-  </div>
-
-  <!-- S8: BRAND CLOSE -->
-  <div class="scene" data-idx="8">
-    <div class="scene-tag">// TRANSMISSION COMPLETE — MISSION ACTIVE</div>
-    <div class="logo gold glitch" data-g="SWRV">SWRV</div>
-    <div class="logo-s" style="margin-top:4px">On-The-Go</div>
-    <div class="rule r-gold" style="animation-delay:0.8s;width:110px"></div>
-    <p class="copy" style="animation-delay:1.05s;color:rgba(255,215,0,0.6);letter-spacing:0.22em;text-transform:uppercase;font-size:clamp(0.52rem,1.1vw,0.68rem)">Swerve on Roadblocks. Let Love GPS.</p>
-    <p class="copy" style="animation-delay:1.35s;color:rgba(0,255,255,0.45);font-size:clamp(0.5rem,1vw,0.62rem);margin-top:5px">swrvonthego@gmail.com</p>
   </div>
 
 </div><!-- /stage -->
@@ -303,6 +294,16 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000008; }
 
 <!-- PROGRESS -->
 <div id="prog-track"><div id="prog-fill"></div></div>
+
+<!-- SKIP BUTTON -->
+<button id="btn-skip" style="
+  position:fixed; bottom:calc(8vh + 8px); left:16px; z-index:80;
+  background:rgba(0,0,10,0.82); border:1px solid rgba(255,215,0,0.5);
+  color:rgba(255,215,0,0.85); font-family:'Share Tech Mono',monospace;
+  font-size:0.52rem; letter-spacing:0.2em; text-transform:uppercase;
+  padding:5px 14px; cursor:pointer; backdrop-filter:blur(6px);
+  transition:border-color 0.2s,color 0.2s,box-shadow 0.2s;
+">SKIP → ECOSYSTEM</button>
 
 <!-- CONTROLS -->
 <div id="controls">
@@ -332,15 +333,13 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000008; }
    DATA
 ═══════════════════════════════════════ */
 const SCENES=[
-  {label:"TRANSMISSION 01/09 — THREAT DETECTED",narration:"Every journey. Has roadblocks. They come for everyone. No matter how prepared. No matter how talented. No matter how driven you are. No exceptions.",rgb:[255,69,0]},
-  {label:"TRANSMISSION 02/09 — STANDARD PROTOCOL",narration:"Most agencies. Get the job done. Complete the transaction. Close the ticket. Move on. But you. Are not a transaction. To us.",rgb:[0,160,255]},
-  {label:"TRANSMISSION 03/09 — TRAJECTORY SHIFT",narration:"We don't stop. Twenty years. Navigating every obstacle. With creativity. With intention. With heart. We don't stop. We swerve. Swrv. On the Go.",rgb:[0,255,255]},
-  {label:"TRANSMISSION 04/09 — MISSION LOG",narration:"Twenty years. Of real world experience. Not software. Not shortcuts. Not automation. Genuine care. Lived experience. A deep passion for helping people fulfill the purpose. God placed inside them.",rgb:[255,215,0]},
-  {label:"TRANSMISSION 05/09 — CAPABILITY MANIFEST",narration:"Photography. Videography. Original music. Jingles. Commercials. Radio shows. Podcasts. Vision and mission statements. One full service branding ecosystem. Built entirely. Around you.",rgb:[0,255,136]},
-  {label:"TRANSMISSION 06/09 — WORLD STATUS",narration:"The world has changed. Content creation is how the world speaks now. The entrepreneur. The pastor. The coach. The business owner. They are all artists. And every artist needs a brand. That is intentional. Authentic. Built to last.",rgb:[155,89,255]},
-  {label:"TRANSMISSION 07/09 — NAVIGATING UNKNOWN",narration:"When you don't know which way to go. You need more than a service. You need a guide. Someone who swerves with you. Around every obstacle. Every roadblock. Every unexpected detour.",rgb:[255,215,0]},
-  {label:"TRANSMISSION 08/09 — NAVIGATION LOCK",narration:"Swerve on roadblocks. Let love GPS. We navigate every challenge. With patience. With purpose. With a genuine investment in where you are trying to go. Because when love leads. Nothing. Can stop the mission.",rgb:[255,0,204]},
-  {label:"TRANSMISSION 09/09 — MISSION ACTIVE",narration:"Swrv On the Go. A full service branding ecosystem. Built entirely around you. We want the experience of building with you. The pleasure of serving you. We want to swerve in our gifts. Every step. Of the way.",rgb:[255,215,0]}
+  {label:"TRANSMISSION 01/07 — WORLD STATUS",narration:"The world has changed. Content creation is how the world speaks now. Whether you're a musician, a chef, a pastor, a dancer, a coach, a developer, an athlete, a stylist, a realtor, or a business owner — you are an artist. And every artist needs a brand ecosystem built entirely around their vision.",rgb:[155,89,255]},
+  {label:"TRANSMISSION 02/07 — STANDARD PROTOCOL",narration:"Complete the transaction. Close the ticket. Move on. Most agencies get a job done. But you are not a transaction to us.",rgb:[0,160,255]},
+  {label:"TRANSMISSION 03/07 — NAVIGATING UNKNOWN",narration:"You need more than a service. You need a guide who swerves with you — around every obstacle, every roadblock, every unexpected detour. We don't just build brands. We build with you.",rgb:[255,215,0]},
+  {label:"TRANSMISSION 04/07 — TRAJECTORY SHIFT",narration:"We swerve on roadblocks. Every obstacle — met with creativity, intention, and heart. We don't stop. We Swerve On The Go.",rgb:[0,255,255]},
+  {label:"TRANSMISSION 05/07 — CAPABILITY MANIFEST",narration:"Photography, videography, original music, jingles, commercials, radio shows, podcasts, and vision and mission statements. One full-service branding ecosystem built entirely around you.",rgb:[0,255,136]},
+  {label:"TRANSMISSION 06/07 — MISSION LOG",narration:"Not software. Not shortcuts. Not automation. Over twenty years of real work, real care, and real results. We've been doing amazing things for over two decades — because genuine care is the foundation everything else is built on.",rgb:[255,215,0]},
+  {label:"TRANSMISSION 07/07 — NAVIGATION LOCK",narration:"We navigate every challenge with patience. With purpose. With love. Because when love leads — nothing can stop the mission.",rgb:[255,0,204]}
 ];
 
 /* ═══════════════════════════════════════
@@ -367,28 +366,42 @@ function drawStars(){
 /* ═══════════════════════════════════════
    SCENE ART
 ═══════════════════════════════════════ */
-const ROCKS=Array.from({length:9},()=>{const n=7+Math.floor(Math.random()*4),angles=Array.from({length:n},(_,i)=>(i/n)*Math.PI*2+(Math.random()-0.5)*0.4),radii=angles.map(()=>0.5+Math.random()*0.5);return{x:Math.random(),y:0.08+Math.random()*0.58,baseR:18+Math.random()*32,spd:(Math.random()-0.5)*0.00009,rot:Math.random()*Math.PI*2,rs:(Math.random()-0.5)*0.009,angles,radii};});
-function drawDebris(t){ROCKS.forEach((r,i)=>{r.x=(r.x+r.spd+1)%1;r.rot+=r.rs;ctx.save();ctx.translate(r.x*W,r.y*H);ctx.rotate(r.rot);ctx.beginPath();r.angles.forEach((a,j)=>{const pr=r.baseR*r.radii[j];j===0?ctx.moveTo(Math.cos(a)*pr,Math.sin(a)*pr):ctx.lineTo(Math.cos(a)*pr,Math.sin(a)*pr);});ctx.closePath();ctx.fillStyle='#120200';ctx.fill();ctx.strokeStyle='#FF4500';ctx.lineWidth=1.5;sg('#FF4500',10+6*Math.sin(t*0.002+i));ctx.stroke();ng();ctx.restore();});if(Math.sin(t*0.004)>0.96){ctx.fillStyle='rgba(255,30,0,0.03)';ctx.fillRect(0,0,W,H);}}
-function drawSatellite(t){const cx=W*0.5,cy=H*0.3;for(let i=0;i<60;i++){ctx.fillStyle=`rgba(0,100,140,${Math.random()*0.12})`;ctx.fillRect(Math.random()*W,Math.random()*H*0.65,Math.random()*3,1);}ctx.save();ctx.translate(cx,cy);ctx.rotate(Math.sin(t*0.0007)*0.025);const sc='rgba(0,120,180,0.35)';ctx.strokeStyle=sc;ctx.lineWidth=1.5;sg(sc,8);ctx.fillStyle='#0e1a28';ctx.fillRect(-28,-17,56,34);ctx.strokeRect(-28,-17,56,34);ctx.fillStyle='#080f18';ctx.fillRect(-100,-9,62,18);ctx.strokeRect(-100,-9,62,18);ctx.fillRect(38,-9,62,18);ctx.strokeRect(38,-9,62,18);ctx.strokeStyle='rgba(0,80,120,0.25)';for(let i=1;i<5;i++){ctx.beginPath();ctx.moveTo(-100+i*12,-9);ctx.lineTo(-100+i*12,9);ctx.stroke();ctx.beginPath();ctx.moveTo(38+i*12,-9);ctx.lineTo(38+i*12,9);ctx.stroke();}ctx.strokeStyle='rgba(0,190,255,0.55)';ctx.lineWidth=1.2;sg('rgba(0,190,255,0.55)',6);ctx.beginPath();ctx.moveTo(-88,60);ctx.lineTo(88,60);ctx.stroke();ng();ctx.restore();}
+function drawDebris(t){const cx=W*0.5,cy=H*0.30,bob=Math.sin(t*0.0008)*14,drift=Math.sin(t*0.0005)*8,tilt=Math.sin(t*0.0006)*0.06;ctx.save();ctx.translate(cx+drift,cy+bob);ctx.rotate(tilt);const grd=ctx.createRadialGradient(0,0,20,0,0,175);grd.addColorStop(0,'rgba(255,69,0,0.15)');grd.addColorStop(1,'transparent');ctx.fillStyle=grd;ctx.beginPath();ctx.arc(0,0,175,0,Math.PI*2);ctx.fill();const bw=220,bh=28,by1=-30,by2=10;const stripe=(by,flip)=>{ctx.save();ctx.beginPath();ctx.rect(-bw/2,by-bh/2,bw,bh);ctx.clip();ctx.fillStyle='#120100';ctx.fillRect(-bw/2,by-bh/2,bw,bh);const sw=26;for(let i=-bh;i<bw+bh;i+=sw*2){const ox=flip?sw:0;ctx.beginPath();ctx.moveTo(-bw/2+i+ox,by-bh/2);ctx.lineTo(-bw/2+i+bh+ox,by+bh/2);ctx.lineTo(-bw/2+i+bh+sw+ox,by+bh/2);ctx.lineTo(-bw/2+i+sw+ox,by-bh/2);ctx.closePath();ctx.fillStyle='#FF4500';ctx.fill();}ctx.restore();ctx.strokeStyle='#FF4500';ctx.lineWidth=2;sg('#FF4500',10);ctx.strokeRect(-bw/2,by-bh/2,bw,bh);ng();};stripe(by1,false);stripe(by2,true);const top=by1-bh/2,bot=88;ctx.strokeStyle='#FF4500';ctx.lineWidth=5;sg('#FF4500',10);ctx.beginPath();ctx.moveTo(-bw/2,top);ctx.lineTo(-100,bot);ctx.stroke();ctx.beginPath();ctx.moveTo(-bw/2,top);ctx.lineTo(-20,bot);ctx.stroke();ctx.beginPath();ctx.moveTo(bw/2,top);ctx.lineTo(100,bot);ctx.stroke();ctx.beginPath();ctx.moveTo(bw/2,top);ctx.lineTo(20,bot);ctx.stroke();ctx.beginPath();ctx.moveTo(-110,bot);ctx.lineTo(110,bot);ctx.stroke();ng();const bA=0.5+0.5*Math.sin(t*0.0045),bB=0.5+0.5*Math.sin(t*0.0045+Math.PI);[[-70,bA],[0,bB],[70,bA]].forEach(([lx,br])=>{ctx.beginPath();ctx.arc(lx,top-14,9,0,Math.PI*2);ctx.fillStyle=`rgba(255,20,0,${0.1+br*0.9})`;ctx.shadowColor='#FF0000';ctx.shadowBlur=br*35;ctx.fill();ctx.shadowBlur=0;});ctx.restore();const signs=[{a:0.22,ra:235,ry:82,sp:0.00018},{a:0.78,ra:220,ry:75,sp:-0.00015}];signs.forEach(s=>{const ang=s.a*Math.PI*2+t*s.sp,sx=cx+Math.cos(ang)*s.ra,sy=cy+Math.sin(ang)*s.ry;ctx.save();ctx.translate(sx,sy);ctx.rotate(ang+t*0.0003);ctx.beginPath();ctx.moveTo(0,-14);ctx.lineTo(14,0);ctx.lineTo(0,14);ctx.lineTo(-14,0);ctx.closePath();ctx.fillStyle='#120100';ctx.strokeStyle='#FF4500';ctx.lineWidth=2;sg('#FF4500',8);ctx.fill();ctx.stroke();ng();ctx.fillStyle='#FF4500';ctx.font='bold 14px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('!',0,0);ctx.restore();});if(Math.sin(t*0.004)>0.96){ctx.fillStyle='rgba(255,30,0,0.03)';ctx.fillRect(0,0,W,H);}}
+const TICKETS=Array.from({length:14},(_,i)=>({id:1001+i*73,done:i%3!==2}));
+function drawSatellite(t){const cx=W*0.5,cy=H*0.38,tw=Math.min(W*0.78,560),th=Math.min(H*0.56,320);for(let i=0;i<22;i++){ctx.strokeStyle=`rgba(0,120,200,${0.03+Math.random()*0.04})`;ctx.lineWidth=1;const lx=Math.random()*W,ly=Math.random()*H*0.7;ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(lx,ly+20+Math.random()*50);ctx.stroke();}ctx.fillStyle='rgba(0,5,18,0.94)';ctx.fillRect(cx-tw/2,cy-th/2,tw,th);ctx.strokeStyle='rgba(0,160,255,0.55)';ctx.lineWidth=1.5;sg('rgba(0,160,255,0.5)',12);ctx.strokeRect(cx-tw/2,cy-th/2,tw,th);ng();const scanY=cy-th/2+((t*0.055)%th);const scg=ctx.createLinearGradient(0,scanY-8,0,scanY+8);scg.addColorStop(0,'transparent');scg.addColorStop(0.5,'rgba(0,160,255,0.06)');scg.addColorStop(1,'transparent');ctx.fillStyle=scg;ctx.fillRect(cx-tw/2,scanY-8,tw,16);ctx.fillStyle='rgba(0,40,90,0.88)';ctx.fillRect(cx-tw/2,cy-th/2,tw,24);const hfs=Math.max(9,Math.floor(W*0.012));ctx.font=`bold ${hfs}px 'Share Tech Mono',monospace`;ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillStyle='rgba(0,180,255,0.75)';sg('rgba(0,160,255,0.6)',6);ctx.fillText('  AGENCY_OS :: TICKET QUEUE',cx-tw/2+6,cy-th/2+12);ng();const rowH=Math.max(14,Math.floor((th-28)/TICKETS.length));const scrollOff=((t*0.020)%rowH)-rowH;ctx.save();ctx.beginPath();ctx.rect(cx-tw/2,cy-th/2+26,tw,th-28);ctx.clip();TICKETS.forEach((tk,i)=>{const ry=cy-th/2+28+i*rowH+scrollOff;ctx.fillStyle=`rgba(0,${tk.done?55:18},${tk.done?105:45},0.22)`;ctx.fillRect(cx-tw/2+4,ry+1,tw-8,rowH-2);const rfs=Math.max(8,Math.floor(W*0.011));ctx.font=`${rfs}px 'Share Tech Mono',monospace`;ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillStyle=tk.done?'rgba(0,160,255,0.7)':'rgba(0,80,140,0.45)';ctx.fillText('CLIENT_'+tk.id,cx-tw/2+12,ry+rowH/2);ctx.textAlign='right';ctx.fillStyle=tk.done?'rgba(0,220,255,0.55)':'rgba(0,100,160,0.38)';ctx.fillText(tk.done?'CLOSED [X]':'QUEUED...',cx+tw/2-10,ry+rowH/2);});ctx.restore();const phase=Math.sin(t*0.0028);if(phase>0.90){const al=(phase-0.90)/0.10;ctx.save();ctx.globalAlpha=al;ctx.translate(cx+tw*0.10,cy+th*0.04);ctx.rotate(0.16);ctx.strokeStyle='rgba(0,160,255,0.95)';ctx.lineWidth=3;sg('rgba(0,160,255,0.8)',22);ctx.strokeRect(-65,-24,130,48);ng();const sfs=Math.max(16,Math.floor(W*0.028));ctx.font=`bold ${sfs}px Orbitron,monospace`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='rgba(0,190,255,0.95)';sg('rgba(0,160,255,0.8)',14);ctx.fillText('CLOSED',0,0);ng();ctx.restore();}}
 function drawShip(t){const spd=0.000085,sx=(t*spd*W)%W,sy=H*0.32+Math.sin(t*0.0028)*H*0.14;for(let i=0;i<6;i++){const ly=H*(0.08+i*0.1),len=50+Math.random()*80,lx=(sx-80-Math.random()*180+W)%W;ctx.strokeStyle=`rgba(0,255,255,${0.06+Math.random()*0.1})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(lx-len,ly);ctx.stroke();}for(let i=1;i<28;i++){const pt=t-i*210,tx=(pt*spd*W+W)%W,ty=H*0.32+Math.sin(pt*0.0028)*H*0.14,a=(1-i/28)*0.5,r=(1-i/28)*4.5;ctx.beginPath();ctx.arc(tx,ty,r,0,Math.PI*2);ctx.fillStyle=`rgba(0,255,255,${a})`;sg('#00FFFF',6);ctx.fill();ng();}ctx.save();ctx.translate(sx,sy);const nsy=H*0.32+Math.sin((t+150)*0.0028)*H*0.14;ctx.rotate(Math.atan2(nsy-sy,12)*0.6);ctx.fillStyle='#00FFFF';sg('#00FFFF',22);ctx.beginPath();ctx.moveTo(16,0);ctx.lineTo(-10,-7);ctx.lineTo(-6,0);ctx.lineTo(-10,7);ctx.closePath();ctx.fill();ng();ctx.restore();}
-const ORBITS=[{r:62,sp:0.00085,col:'#FFD700',pr:5},{r:105,sp:0.00055,col:'#FFB800',pr:4},{r:150,sp:0.00032,col:'#FF9500',pr:3.5}];
-function drawOrbital(t){const cx=W*0.5,cy=H*0.3;ORBITS.forEach((o,i)=>{ctx.beginPath();ctx.ellipse(cx,cy,o.r,o.r*0.28,-0.15,0,Math.PI*2);ctx.strokeStyle='rgba(255,215,0,0.18)';ctx.lineWidth=1;sg('#FFD700',3);ctx.stroke();ng();const ang=t*o.sp*(i%2===0?1:-1),dx=cx+Math.cos(ang)*o.r,dy=cy+Math.sin(ang)*o.r*0.28;ctx.beginPath();ctx.arc(dx,dy,o.pr,0,Math.PI*2);ctx.fillStyle=o.col;sg(o.col,14);ctx.fill();ng();});const pulse=1+0.12*Math.sin(t*0.002),sgg=ctx.createRadialGradient(cx,cy,0,cx,cy,38*pulse);sgg.addColorStop(0,'#FFFDE0');sgg.addColorStop(0.2,'#FFD700');sgg.addColorStop(0.6,'rgba(255,184,0,0.4)');sgg.addColorStop(1,'transparent');ctx.beginPath();ctx.arc(cx,cy,38*pulse,0,Math.PI*2);ctx.fillStyle=sgg;sg('#FFD700',45);ctx.fill();ng();}
-const CNODES=[[0.12,0.12],[0.35,0.08],[0.62,0.12],[0.85,0.08],[0.22,0.28],[0.5,0.22],[0.75,0.28],[0.1,0.42],[0.38,0.38],[0.65,0.42],[0.9,0.38],[0.25,0.55],[0.55,0.52],[0.78,0.55]];
-const CCON=[[0,1],[1,2],[2,3],[0,4],[1,4],[1,5],[2,5],[2,6],[3,6],[4,7],[4,8],[5,8],[5,9],[6,9],[6,10],[7,11],[8,11],[8,12],[9,12],[9,13],[10,13]];
-function drawCircuit(t){const oy=H*0.04;CCON.forEach(([a,b])=>{const[ax,ay]=[CNODES[a][0]*W,oy+CNODES[a][1]*H*0.58],[bx,by]=[CNODES[b][0]*W,oy+CNODES[b][1]*H*0.58];ctx.strokeStyle='rgba(0,255,136,0.1)';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke();const p=(t*0.0015+a*0.3)%1,px=ax+(bx-ax)*p,py=ay+(by-ay)*p;ctx.beginPath();ctx.arc(px,py,2.5,0,Math.PI*2);ctx.fillStyle='#00FF88';sg('#00FF88',8);ctx.fill();ng();});CNODES.forEach(([nx,ny],i)=>{const x=nx*W,y=oy+ny*H*0.58,pulse=0.5+0.5*Math.sin(t*0.0025+i*0.6);ctx.beginPath();ctx.arc(x,y,4+pulse*3,0,Math.PI*2);ctx.fillStyle='#00FF88';sg('#00FF88',12+pulse*10);ctx.fill();ng();});}
-const NET=Array.from({length:28},()=>({x:Math.random(),y:Math.random()*0.62+0.04,vx:(Math.random()-0.5)*0.00018,vy:(Math.random()-0.5)*0.00018,col:['#9B59FF','#00FFFF','#FF00CC','#FFD700'][Math.floor(Math.random()*4)],r:2.5+Math.random()*3.5,ph:Math.random()*Math.PI*2}));
-function drawNetwork(){NET.forEach(n=>{n.x=(n.x+n.vx+1)%1;n.y=Math.max(0.04,Math.min(0.66,n.y+n.vy));if(n.y<=0.04||n.y>=0.66)n.vy*=-1;});NET.forEach((a,i)=>NET.forEach((b,j)=>{if(j<=i)return;const dx=(a.x-b.x)*W,dy=(a.y-b.y)*H,d=Math.sqrt(dx*dx+dy*dy);if(d<165){ctx.strokeStyle=`rgba(155,89,255,${(1-d/165)*0.28})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a.x*W,a.y*H);ctx.lineTo(b.x*W,b.y*H);ctx.stroke();}}));NET.forEach((n,i)=>{const pulse=0.7+0.3*Math.sin(Date.now()*0.003+n.ph);ctx.beginPath();ctx.arc(n.x*W,n.y*H,n.r*pulse,0,Math.PI*2);ctx.fillStyle=n.col;sg(n.col,9);ctx.fill();ng();});}
+const MILESTONES=[{yr:'2005',lbl:'FOUNDED',s:1},{yr:'2010',lbl:'100+ CLIENTS',s:-1},{yr:'2015',lbl:'EXPANDED',s:1},{yr:'2020',lbl:'EVOLVED',s:-1},{yr:'2025',lbl:'MISSION ACTIVE',s:1}];
+function drawOrbital(t){const lx=W*0.08,rx=W*0.92,cy=H*0.33,span=rx-lx;const tg=ctx.createLinearGradient(lx,cy,rx,cy);tg.addColorStop(0,'transparent');tg.addColorStop(0.07,'#FFD700');tg.addColorStop(0.93,'#FFD700');tg.addColorStop(1,'transparent');ctx.beginPath();ctx.moveTo(lx,cy);ctx.lineTo(rx,cy);ctx.strokeStyle=tg;ctx.lineWidth=2;sg('#FFD700',10);ctx.stroke();ng();const pct=((t*0.00013)%1);[{r:3,a:1,o:0},{r:2,a:0.65,o:0.014},{r:1.2,a:0.3,o:0.026}].forEach(p=>{const px=lx+span*Math.max(0,pct-p.o);ctx.beginPath();ctx.arc(px,cy,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,220,${p.a})`;if(p.r===3){sg('#FFFFFF',14);ctx.fill();ng();}else ctx.fill();});MILESTONES.forEach((m,i)=>{const nx=lx+span*(i/(MILESTONES.length-1));const pulse=0.7+0.3*Math.sin(t*0.0022+i*1.1);const nr=6+pulse*4;const armY=cy+m.s*(55+pulse*4);ctx.beginPath();ctx.moveTo(nx,cy+m.s*nr);ctx.lineTo(nx,armY);ctx.strokeStyle='rgba(255,215,0,0.28)';ctx.lineWidth=1;sg('#FFD700',3);ctx.stroke();ng();ctx.beginPath();ctx.arc(nx,cy,nr,0,Math.PI*2);ctx.fillStyle='#080500';ctx.fill();ctx.strokeStyle='#FFD700';ctx.lineWidth=1.8;sg('#FFD700',14*pulse);ctx.stroke();ng();const fs=Math.max(10,Math.floor(W*0.016)),sfs=Math.max(7,Math.floor(W*0.011));ctx.textAlign='center';ctx.fillStyle='#FFD700';ctx.font=`bold ${fs}px Orbitron,monospace`;sg('#FFD700',7);ctx.fillText(m.yr,nx,armY+m.s*18);ng();ctx.fillStyle='rgba(255,215,0,0.55)';ctx.font=`${sfs}px 'Share Tech Mono',monospace`;ctx.fillText(m.lbl,nx,armY+m.s*38);});}
+const SVCITEMS=[['PHOTOGRAPHY','& VIDEOGRAPHY'],['JINGLES &','FULL SONGS'],['COMMERCIALS &','CONTENT'],['RADIO SHOWS','→ PODCASTS'],['VISION &','MISSION']];
+const SVCORBS=[{r:0.24,sp:0.00022,off:0,tilt:0.15},{r:0.24,sp:0.00022,off:1.2566,tilt:0.15},{r:0.24,sp:0.00022,off:2.5133,tilt:0.15},{r:0.24,sp:0.00022,off:3.7699,tilt:0.15},{r:0.24,sp:0.00022,off:5.0265,tilt:0.15}];
+function drawCircuit(t){const cx=W*0.5,cy=H*0.30,mr=Math.min(W,H);const hub=0.7+0.3*Math.sin(t*0.002);const hg=ctx.createRadialGradient(cx,cy,0,cx,cy,50*hub);hg.addColorStop(0,'rgba(0,255,136,0.9)');hg.addColorStop(1,'transparent');ctx.beginPath();ctx.arc(cx,cy,50*hub,0,Math.PI*2);ctx.fillStyle=hg;sg('#00FF88',34*hub);ctx.fill();ng();ctx.beginPath();ctx.arc(cx,cy,18,0,Math.PI*2);ctx.fillStyle='#00FF88';sg('#00FF88',32);ctx.fill();ng();SVCORBS.forEach((o,i)=>{const rx=mr*o.r*1.38,ry=mr*o.r*0.50,ct=Math.cos(o.tilt),st=Math.sin(o.tilt);ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,o.tilt,0,Math.PI*2);ctx.strokeStyle='rgba(0,255,136,0.1)';ctx.lineWidth=1;ctx.stroke();const ang=o.off+t*o.sp,cp=Math.cos(ang),sn=Math.sin(ang);const ix=cx+cp*rx*ct-sn*ry*st,iy=cy+cp*rx*st+sn*ry*ct;const p=0.7+0.3*Math.sin(t*0.0022+i*1.2);const ng2=ctx.createRadialGradient(ix,iy,0,ix,iy,44*p);ng2.addColorStop(0,'rgba(0,255,136,0.25)');ng2.addColorStop(1,'transparent');ctx.beginPath();ctx.arc(ix,iy,44*p,0,Math.PI*2);ctx.fillStyle=ng2;ctx.fill();ctx.beginPath();ctx.arc(ix,iy,20+p*8,0,Math.PI*2);ctx.fillStyle='#000a04';ctx.fill();ctx.strokeStyle='#00FF88';ctx.lineWidth=2.5;sg('#00FF88',28*p);ctx.stroke();ng();const fs=Math.max(12,Math.floor(W*0.020));ctx.font=`bold ${fs}px 'Share Tech Mono',monospace`;ctx.textAlign='center';SVCITEMS[i].forEach((ln,li)=>{ctx.fillStyle=`rgba(0,255,136,${0.55+0.4*p})`;sg('#00FF88',6);ctx.fillText(ln,ix,iy+56+(li-(SVCITEMS[i].length-1)/2)*(fs+5));ng();});});}
+const ARTTOOLS=[{lbl:'CAMERA',col:'#9B59FF',ang:0,orb:0.22,sp:0.00022,tilt:0.16},{lbl:'MUSIC',col:'#00FFFF',ang:0.6283,orb:0.22,sp:0.00022,tilt:0.16},{lbl:'BRUSH',col:'#FF00CC',ang:1.2566,orb:0.22,sp:0.00022,tilt:0.16},{lbl:'MIC',col:'#FFD700',ang:1.8850,orb:0.22,sp:0.00022,tilt:0.16},{lbl:'PEN',col:'#00FF88',ang:2.5133,orb:0.22,sp:0.00022,tilt:0.16},{lbl:'CHEF',col:'#FF6B35',ang:3.1416,orb:0.22,sp:0.00022,tilt:0.16},{lbl:'DANCE',col:'#FF00CC',ang:3.7699,orb:0.22,sp:0.00022,tilt:0.16},{lbl:'CODE',col:'#00FF88',ang:4.3982,orb:0.22,sp:0.00022,tilt:0.16},{lbl:'FAITH',col:'#FFD700',ang:5.0265,orb:0.22,sp:0.00022,tilt:0.16},{lbl:'COACH',col:'#9B59FF',ang:5.6549,orb:0.22,sp:0.00022,tilt:0.16}];
+function drawNetwork(t){const cx=W*0.5,cy=H*0.36,er=Math.min(W,H)*0.16;const eg=ctx.createRadialGradient(cx,cy,0,cx,cy,er*1.85);eg.addColorStop(0,'rgba(100,60,255,0.12)');eg.addColorStop(1,'transparent');ctx.fillStyle=eg;ctx.beginPath();ctx.arc(cx,cy,er*1.85,0,Math.PI*2);ctx.fill();const grd=ctx.createRadialGradient(cx-er*0.3,cy-er*0.3,er*0.04,cx,cy,er);grd.addColorStop(0,'#1a1060');grd.addColorStop(0.55,'#0d0840');grd.addColorStop(1,'#060325');ctx.beginPath();ctx.arc(cx,cy,er,0,Math.PI*2);ctx.fillStyle=grd;sg('#9B59FF',22);ctx.fill();ng();ctx.strokeStyle='rgba(155,89,255,0.85)';ctx.lineWidth=1.5;ctx.stroke();ctx.save();ctx.beginPath();ctx.arc(cx,cy,er,0,Math.PI*2);ctx.clip();ctx.strokeStyle='rgba(155,89,255,0.18)';ctx.lineWidth=0.8;for(let g=1;g<4;g++){const ly=cy-er+g*er*0.5,lw=Math.sqrt(Math.max(0,er*er-(ly-cy)*(ly-cy)));ctx.beginPath();ctx.ellipse(cx,ly,lw,lw*0.18,0,0,Math.PI*2);ctx.stroke();}for(let g=0;g<5;g++){ctx.save();ctx.translate(cx,cy);ctx.rotate(g*Math.PI/5);ctx.beginPath();ctx.moveTo(0,-er);ctx.lineTo(0,er);ctx.stroke();ctx.restore();}ctx.restore();const mr=Math.min(W,H);ARTTOOLS.forEach((tool,i)=>{const pa=tool.ang+t*tool.sp,rx=Math.min(mr*tool.orb*1.00,W*0.42),ry=Math.min(mr*tool.orb*0.36,H*0.11),ct=Math.cos(tool.tilt),st=Math.sin(tool.tilt),cp=Math.cos(pa),sn=Math.sin(pa);const ix=cx+cp*rx*ct-sn*ry*st,iy=cy+cp*rx*st+sn*ry*ct;const p=0.7+0.3*Math.sin(t*0.0025+i*1.2);const tg=ctx.createRadialGradient(ix,iy,0,ix,iy,48*p);tg.addColorStop(0,tool.col+'44');tg.addColorStop(1,'transparent');ctx.beginPath();ctx.arc(ix,iy,48*p,0,Math.PI*2);ctx.fillStyle=tg;ctx.fill();ctx.save();ctx.translate(ix,iy);ctx.scale(2.4,2.4);ctx.strokeStyle=tool.col;ctx.lineWidth=1.2;sg(tool.col,20*p);if(tool.lbl==='CAMERA'){ctx.beginPath();ctx.rect(-8,-6,16,12);ctx.stroke();ctx.beginPath();ctx.arc(0,0,3.5,0,Math.PI*2);ctx.stroke();ctx.fillStyle=tool.col;ctx.fillRect(-3,-9,6,3);}else if(tool.lbl==='MUSIC'){ctx.beginPath();ctx.ellipse(-1,4,5,3.5,0.4,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.moveTo(4,4);ctx.lineTo(4,-8);ctx.lineTo(11,-5);ctx.lineTo(11,2);ctx.stroke();}else if(tool.lbl==='BRUSH'){ctx.beginPath();ctx.moveTo(0,-11);ctx.lineTo(3,4);ctx.lineTo(0,9);ctx.lineTo(-3,4);ctx.closePath();ctx.stroke();}else if(tool.lbl==='MIC'){ctx.beginPath();ctx.arc(0,-3,5,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.rect(-2,2,4,5);ctx.stroke();ctx.beginPath();ctx.moveTo(-5,7);ctx.quadraticCurveTo(-5,12,0,12);ctx.quadraticCurveTo(5,12,5,7);ctx.stroke();ctx.beginPath();ctx.moveTo(0,12);ctx.lineTo(0,15);ctx.stroke();}else if(tool.lbl==='CHEF'){ctx.beginPath();ctx.arc(0,-5,7,Math.PI,0,false);ctx.stroke();ctx.beginPath();ctx.moveTo(-7,-5);ctx.lineTo(-7,3);ctx.lineTo(7,3);ctx.lineTo(7,-5);ctx.stroke();ctx.beginPath();ctx.rect(-8,3,16,5);ctx.stroke();}else if(tool.lbl==='DANCE'){ctx.beginPath();ctx.arc(0,-9,2.5,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.moveTo(0,-6);ctx.lineTo(0,1);ctx.stroke();ctx.beginPath();ctx.moveTo(0,-2);ctx.lineTo(-7,4);ctx.stroke();ctx.beginPath();ctx.moveTo(0,-2);ctx.lineTo(7,-5);ctx.stroke();ctx.beginPath();ctx.moveTo(0,1);ctx.lineTo(-5,9);ctx.stroke();ctx.beginPath();ctx.moveTo(0,1);ctx.lineTo(6,8);ctx.stroke();}else if(tool.lbl==='CODE'){ctx.beginPath();ctx.moveTo(-3,-9);ctx.lineTo(-11,0);ctx.lineTo(-3,9);ctx.stroke();ctx.beginPath();ctx.moveTo(3,-9);ctx.lineTo(11,0);ctx.lineTo(3,9);ctx.stroke();}else if(tool.lbl==='FAITH'){ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-12);ctx.lineTo(0,12);ctx.stroke();ctx.beginPath();ctx.moveTo(-7,-3);ctx.lineTo(7,-3);ctx.stroke();}else if(tool.lbl==='COACH'){ctx.beginPath();ctx.arc(-1,0,7,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.moveTo(6,-1);ctx.lineTo(12,-4);ctx.lineTo(12,2);ctx.closePath();ctx.stroke();ctx.beginPath();ctx.arc(-1,0,3,0,Math.PI*2);ctx.stroke();}else{ctx.beginPath();ctx.moveTo(0,-10);ctx.lineTo(4,4);ctx.lineTo(0,9);ctx.lineTo(-4,4);ctx.closePath();ctx.stroke();}ng();ctx.restore();const fs=Math.max(12,Math.floor(W*0.020));ctx.font=`bold ${fs}px 'Share Tech Mono',monospace`;ctx.textAlign='center';ctx.textBaseline='top';ctx.fillStyle=tool.col;sg(tool.col,9);ctx.fillText(tool.lbl,ix,iy+40);ng();});}
 function drawBeacon(t){const cx=W*0.5,cy=H*0.28;ctx.strokeStyle='rgba(255,215,0,0.055)';ctx.lineWidth=1;for(let i=0;i<=14;i++){ctx.beginPath();ctx.moveTo(i*W/14,0);ctx.lineTo(i*W/14,H*0.8);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*H*0.8/14);ctx.lineTo(W,i*H*0.8/14);ctx.stroke();}const ba=(t*0.001)%(Math.PI*2),bLen=Math.min(W,H)*0.38;ctx.save();ctx.translate(cx,cy);ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,bLen,ba-0.38,ba,false);ctx.closePath();const bg=ctx.createLinearGradient(0,0,Math.cos(ba-0.19)*bLen,Math.sin(ba-0.19)*bLen);bg.addColorStop(0,'rgba(255,215,0,0.35)');bg.addColorStop(1,'rgba(255,215,0,0)');ctx.fillStyle=bg;sg('#FFD700',18);ctx.fill();ng();ctx.restore();for(let i=0;i<5;i++){const rr=((t*0.045+i*44)%220);ctx.beginPath();ctx.arc(cx,cy,rr,0,Math.PI*2);ctx.strokeStyle=`rgba(255,215,0,${(1-rr/220)*0.38})`;ctx.lineWidth=1;sg('#FFD700',4);ctx.stroke();ng();}ctx.beginPath();ctx.arc(cx,cy,9,0,Math.PI*2);ctx.fillStyle='#FFD700';sg('#FFD700',35);ctx.fill();ng();}
 const HEART=Array.from({length:90},(_,i)=>{const th=(i/90)*Math.PI*2;return{hx:16*Math.pow(Math.sin(th),3),hy:-(13*Math.cos(th)-5*Math.cos(2*th)-2*Math.cos(3*th)-Math.cos(4*th)),ph:Math.random()*Math.PI*2};});
 function drawLoveGPS(t){const cx=W*0.5,cy=H*0.28,sc=Math.min(W,H)*0.013;ctx.strokeStyle='rgba(255,0,204,0.055)';ctx.lineWidth=1;for(let i=0;i<=14;i++){ctx.beginPath();ctx.moveTo(i*W/14,0);ctx.lineTo(i*W/14,H*0.75);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*H*0.75/14);ctx.lineTo(W,i*H*0.75/14);ctx.stroke();}for(let i=0;i<5;i++){const r=((t*0.038+i*44)%230);ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle=`rgba(255,0,204,${(1-r/230)*0.32})`;ctx.lineWidth=1;sg('#FF00CC',4);ctx.stroke();ng();}const pulse=1+0.07*Math.sin(t*0.002);HEART.forEach(pt=>{const x=cx+pt.hx*sc*pulse,y=cy+pt.hy*sc*pulse;ctx.beginPath();ctx.arc(x,y,2.8,0,Math.PI*2);ctx.fillStyle='#FF00CC';sg('#FF00CC',8);ctx.fill();ng();});const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,55);cg.addColorStop(0,'rgba(255,0,204,0.3)');cg.addColorStop(1,'transparent');ctx.beginPath();ctx.arc(cx,cy,55,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();}
-const NOVA=Array.from({length:130},()=>({ang:Math.random()*Math.PI*2,spd:0.25+Math.random()*1.6,r:2+Math.random()*3.5,life:Math.random(),dec:0.0018+Math.random()*0.0038,col:['#FFD700','#FFB800','#FF8C00','#FFF8DC','#FFFFFF'][Math.floor(Math.random()*5)]}));
-function drawNova(t){const cx=W*0.5,cy=H*0.28;NOVA.forEach(p=>{p.life-=p.dec;if(p.life<=0){p.life=1;p.ang=Math.random()*Math.PI*2;p.spd=0.25+Math.random()*1.6;}const dist=(1-p.life)*210,x=cx+Math.cos(p.ang)*dist,y=cy+Math.sin(p.ang)*dist;ctx.beginPath();ctx.arc(x,y,p.r*p.life,0,Math.PI*2);ctx.globalAlpha=p.life*0.85;ctx.fillStyle=p.col;sg(p.col,7);ctx.fill();ng();ctx.globalAlpha=1;});for(let i=0;i<3;i++){const ra=55+i*48,ang=t*0.0006*(i%2===0?1:-1);ctx.save();ctx.translate(cx,cy);ctx.rotate(ang);ctx.scale(1,0.3);ctx.beginPath();ctx.arc(0,0,ra,0,Math.PI*2);ctx.strokeStyle=`rgba(255,215,0,${0.32-i*0.07})`;ctx.lineWidth=1.5;sg('#FFD700',8);ctx.stroke();ng();ctx.restore();}const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,52);cg.addColorStop(0,'rgba(255,255,220,0.92)');cg.addColorStop(0.25,'rgba(255,215,0,0.65)');cg.addColorStop(1,'transparent');ctx.beginPath();ctx.arc(cx,cy,52,0,Math.PI*2);ctx.fillStyle=cg;sg('#FFD700',40);ctx.fill();ng();}
+const ECO_RINGS=[
+  {nodes:['PHOTOGRAPHY','VIDEOGRAPHY','MUSIC'],r:0.16,sp:0.00028,tilt:0.18},
+  {nodes:['JINGLES','COMMERCIALS','PODCASTS','BRANDING'],r:0.27,sp:-0.00020,tilt:-0.14},
+  {nodes:['VISION','MISSION','CONTENT','MEDIA','STRATEGY'],r:0.37,sp:0.00013,tilt:0.22}
+];
+function drawNova(t){const cx=W*0.5,cy=H*0.22,mr=Math.min(W,H);
+const atm=ctx.createRadialGradient(cx,cy,0,cx,cy,mr*0.48);atm.addColorStop(0,'rgba(255,215,0,0.10)');atm.addColorStop(0.6,'rgba(255,140,0,0.04)');atm.addColorStop(1,'transparent');ctx.fillStyle=atm;ctx.fillRect(0,0,W,H*0.50);
+ECO_RINGS.forEach((ring,ri)=>{const rx=mr*ring.r*1.55,ry=mr*ring.r*0.52,ct=Math.cos(ring.tilt),st=Math.sin(ring.tilt);ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,ring.tilt,0,Math.PI*2);ctx.strokeStyle=`rgba(255,215,0,0.07)`;ctx.lineWidth=1;ctx.stroke();
+for(let pi=0;pi<5;pi++){const pa=((t*0.00022*(ri+1)+pi*0.2)%1)*Math.PI*2,pcp=Math.cos(pa),psn=Math.sin(pa),px=cx+pcp*rx*ct-psn*ry*st,py=cy+pcp*rx*st+psn*ry*ct;ctx.beginPath();ctx.arc(px,py,2.2,0,Math.PI*2);ctx.fillStyle='rgba(255,248,200,0.75)';sg('#FFF8DC',8);ctx.fill();ng();}
+ring.nodes.forEach((lbl,ni)=>{const ang=(ni/ring.nodes.length)*Math.PI*2+t*ring.sp,cp=Math.cos(ang),sn=Math.sin(ang),ix=cx+cp*rx*ct-sn*ry*st,iy=cy+cp*rx*st+sn*ry*ct,p=0.68+0.32*Math.sin(t*0.0022+ni*1.4+ri*2.1);
+ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(ix,iy);ctx.strokeStyle=`rgba(255,215,0,${0.05+p*0.06})`;ctx.lineWidth=0.8;ctx.stroke();
+const ng2=ctx.createRadialGradient(ix,iy,0,ix,iy,20*p);ng2.addColorStop(0,'rgba(255,215,0,0.28)');ng2.addColorStop(1,'transparent');ctx.fillStyle=ng2;ctx.beginPath();ctx.arc(ix,iy,20*p,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(ix,iy,5+p*3,0,Math.PI*2);ctx.fillStyle='#040200';ctx.fill();ctx.strokeStyle='#FFD700';ctx.lineWidth=1.8;sg('#FFD700',14*p);ctx.stroke();ng();
+const fs=Math.max(9,Math.floor(W*0.014));ctx.font=`bold ${fs}px 'Share Tech Mono',monospace`;ctx.textAlign='center';ctx.textBaseline='top';ctx.fillStyle=`rgba(255,215,0,${0.45+0.45*p})`;sg('#FFD700',5);ctx.fillText(lbl,ix,iy+18+p*4);ng();});});
+const hub=1+0.14*Math.sin(t*0.0017);const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,72*hub);cg.addColorStop(0,'rgba(255,255,220,0.95)');cg.addColorStop(0.18,'rgba(255,215,0,0.80)');cg.addColorStop(0.55,'rgba(255,140,0,0.28)');cg.addColorStop(1,'transparent');ctx.beginPath();ctx.arc(cx,cy,72*hub,0,Math.PI*2);ctx.fillStyle=cg;sg('#FFD700',55);ctx.fill();ng();
+for(let i=0;i<3;i++){const ra=(62+i*55)*hub,ang=t*0.0005*(i%2===0?1:-1);ctx.save();ctx.translate(cx,cy);ctx.rotate(ang);ctx.scale(1,0.28);ctx.beginPath();ctx.arc(0,0,ra,0,Math.PI*2);ctx.strokeStyle=`rgba(255,215,0,${0.28-i*0.07})`;ctx.lineWidth=1.5;sg('#FFD700',7);ctx.stroke();ng();ctx.restore();}}
 
 /* ═══════════════════════════════════════
    RENDER LOOP
 ═══════════════════════════════════════ */
 let curIdx=0;
-const DRAWERS=[drawDebris,drawSatellite,drawShip,drawOrbital,drawCircuit,drawNetwork,drawBeacon,drawLoveGPS,drawNova];
+const DRAWERS=[drawNetwork,drawSatellite,drawBeacon,drawShip,drawCircuit,drawOrbital,drawLoveGPS];
 let T0=Date.now();
 
 function drawBg(idx){const[r,g_,b]=SCENES[idx].rgb;ctx.fillStyle='#000008';ctx.fillRect(0,0,W,H);const bg=ctx.createRadialGradient(W*0.5,H*0.38,0,W*0.5,H*0.38,Math.max(W,H)*0.72);bg.addColorStop(0,`rgba(${r},${g_},${b},0.11)`);bg.addColorStop(0.55,`rgba(${Math.floor(r*0.18)},${Math.floor(g_*0.18)},${Math.floor(b*0.18)},0.07)`);bg.addColorStop(1,'rgba(0,0,8,0)');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);}
@@ -417,39 +430,61 @@ const WBS=[document.getElementById('w1'),document.getElementById('w2'),document.
 const AL=document.getElementById('audio-label');
 function setWave(on){WBS.forEach(w=>w.classList.toggle('off',!on));AL.textContent=on?'VOICE ACTIVE':'STANDBY';}
 
-// Active Audio element so we can stop it mid-playback
+// ── Epoch token: incremented every stopSpeak() call.
+// All async callbacks capture the epoch at creation time and bail if it no
+// longer matches — prevents stale Web Speech / MP3 callbacks from firing
+// after a scene change, which was causing double-advances and audio glitches.
+let epoch=0;
 let activeAudio=null;
 
-function speak(text,onEnd,sceneIdx){
-  stopSpeak();
+function stopSpeak(){
+  epoch++;                                               // invalidate ALL pending callbacks
+  if(activeAudio){ activeAudio.pause(); activeAudio.currentTime=0; activeAudio=null; }
+  if(window.speechSynthesis) speechSynthesis.cancel();  // may trigger onerror('interrupted') — epoch guards against it
+  setWave(false);
+}
 
-  // ── Primary: pre-generated MP3 (OpenAI onyx voice) ──────────────────
+function speak(text,onEnd,sceneIdx){
+  stopSpeak();                   // bumps epoch first
+  const myEpoch=epoch;           // snapshot — callbacks compare against this
+
+  const guardedEnd=()=>{ if(epoch===myEpoch && onEnd) onEnd(); };
+
+  // ── Primary: pre-generated MP3 ──────────────────────────────────────
   if(sceneIdx!==undefined){
     const audio=new Audio(`/audio/narration-${sceneIdx}.mp3`);
     activeAudio=audio;
 
-    // BUG FIX: both onerror and play().catch fire when MP3 is missing.
-    // Guard ensures speakFallback is only called once.
     let fallbackFired=false;
     const tryFallback=()=>{
-      if(fallbackFired) return;
+      if(fallbackFired||epoch!==myEpoch) return;
       fallbackFired=true;
       activeAudio=null;
       setWave(false);
-      speakFallback(text,onEnd);
+      speakFallback(text,guardedEnd,myEpoch);
     };
 
-    audio.onplay  =()=>setWave(true);
-    audio.onended =()=>{ setWave(false); activeAudio=null; if(onEnd) setTimeout(onEnd,1900); };
+    audio.onplay  =()=>{ if(epoch===myEpoch) setWave(true); };
+    audio.onended =()=>{
+      if(epoch!==myEpoch) return;
+      setWave(false);
+      activeAudio=null;
+      setTimeout(guardedEnd,400);
+    };
     audio.onerror =tryFallback;
     audio.play().catch(tryFallback);
+
+    if(sceneIdx+1<SCENES.length){
+      const pre=new Audio(`/audio/narration-${sceneIdx+1}.mp3`);
+      pre.preload='auto';
+    }
     return;
   }
 
-  speakFallback(text,onEnd);
+  speakFallback(text,guardedEnd,myEpoch);
 }
 
-// ── Fallback: Web Speech API (used only if MP3s not yet generated) ────
+// ── Fallback: Web Speech API ─────────────────────────────────────────
 let voices=[];
 const loadV=()=>{ voices=speechSynthesis.getVoices(); };
 loadV();
@@ -464,41 +499,46 @@ function pickVoice(){
   return voices.find(v=>v.lang.startsWith('en'))||null;
 }
 
-function speakFallback(text,onEnd){
-  // Estimated scene duration so we never advance faster than readable
+function speakFallback(text,onEnd,myEpoch){
   const sceneDur=estMs(text);
 
   if(!window.speechSynthesis){
-    // No TTS at all — wait the proper scene duration before advancing
     setWave(false);
-    if(onEnd) setTimeout(onEnd,sceneDur+1900);
+    setTimeout(()=>{ if(epoch===myEpoch && onEnd) onEnd(); },sceneDur+400);
     return;
   }
+
   speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(text);
-  u.rate=0.72; u.pitch=0.50; u.volume=1;
+  u.rate=0.68; u.pitch=0.50; u.volume=1;
   const v=pickVoice(); if(v) u.voice=v;
 
-  // Safety timer: if the browser silently drops the speech request
-  // (common in iframes / some mobile browsers), advance after scene duration.
+  // Safety timer: fires if the browser silently drops the speech (common in iframes)
   let safetyTimer=setTimeout(()=>{
+    if(epoch!==myEpoch) return;
     setWave(false);
-    if(onEnd) setTimeout(onEnd,1900);
-  }, sceneDur+2500);
+    if(onEnd) setTimeout(onEnd,400);
+  },sceneDur+2500);
 
-  u.onstart =()=>setWave(true);
-  u.onend   =()=>{ clearTimeout(safetyTimer); setWave(false); if(onEnd) setTimeout(onEnd,1900); };
-  u.onerror =()=>{ clearTimeout(safetyTimer); setWave(false);
-    // Don't advance in 600ms — wait the actual scene duration
-    if(onEnd) setTimeout(onEnd,sceneDur+1000);
+  u.onstart=()=>{ if(epoch===myEpoch) setWave(true); };
+
+  u.onend=()=>{
+    clearTimeout(safetyTimer);
+    if(epoch!==myEpoch) return;    // stale — a newer scene already took over
+    setWave(false);
+    setTimeout(onEnd,400);         // reduced from 1900ms
   };
-  speechSynthesis.speak(u);
-}
 
-function stopSpeak(){
-  if(activeAudio){ activeAudio.pause(); activeAudio.currentTime=0; activeAudio=null; }
-  if(window.speechSynthesis) speechSynthesis.cancel();
-  setWave(false);
+  u.onerror=(ev)=>{
+    clearTimeout(safetyTimer);
+    // 'interrupted'/'canceled' = we called cancel() intentionally on scene change — NOT a real error
+    if(ev.error==='interrupted'||ev.error==='canceled') return;
+    if(epoch!==myEpoch) return;
+    setWave(false);
+    if(onEnd) setTimeout(onEnd,sceneDur+600);
+  };
+
+  speechSynthesis.speak(u);
 }
 
 /* ═══════════════════════════════════════
@@ -519,14 +559,61 @@ function startProg(ms){clearInterval(progTimer);progFill.style.width='0%';progSt
 
 setInterval(()=>{const s=Math.floor((Date.now()-T0)/1000);timeDis.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');},1000);
 
-function showScene(idx){scenes.forEach(s=>s.classList.remove('active'));scenes[idx].classList.add('active');curIdx=idx;counter.textContent=String(idx+1).padStart(2,'0')+' / '+String(SCENES.length).padStart(2,'0');updateDots();capBar.style.opacity='0';setTimeout(()=>{capLbl.textContent=SCENES[idx].label;capTxt.textContent=SCENES[idx].narration;capBar.style.opacity='1';},320);}
+const skipBtn=document.getElementById('btn-skip');
+skipBtn.addEventListener('click',()=>goTo(SCENES.length-1));
+skipBtn.addEventListener('mouseenter',()=>{skipBtn.style.borderColor='#FFD700';skipBtn.style.color='#FFD700';skipBtn.style.boxShadow='0 0 12px rgba(255,215,0,0.35)';});
+skipBtn.addEventListener('mouseleave',()=>{skipBtn.style.borderColor='rgba(255,215,0,0.5)';skipBtn.style.color='rgba(255,215,0,0.85)';skipBtn.style.boxShadow='none';});
 
-function playScene(idx){stopSpeak();clearTimeout(pending);showScene(idx);startProg(estMs(SCENES[idx].narration)+1900);if(!paused)speak(SCENES[idx].narration,()=>{if(!paused)pending=setTimeout(()=>{if(!paused)next();},200);},idx);}
+function showScene(idx){scenes.forEach(s=>s.classList.remove('active'));scenes[idx].classList.add('active');curIdx=idx;counter.textContent=String(idx+1).padStart(2,'0')+' / '+String(SCENES.length).padStart(2,'0');updateDots();capBar.style.opacity='0';skipBtn.style.display=idx>=SCENES.length-1?'none':'block';setTimeout(()=>{capLbl.textContent=SCENES[idx].label;capTxt.textContent=SCENES[idx].narration;capBar.style.opacity='1';},320);}
 
-function next(){if(current<SCENES.length-1){current++;playScene(current);}else{clearInterval(progTimer);progFill.style.width='100%';stopSpeak();}}
+/* ── Background music ──────────────────────────────────────────── */
+const bgMusic=(()=>{
+  const a=new Audio('/media/swrvBIRDSONG_-_SWRV_Instrumental_cx9yj8.mp3');
+  a.loop=true;
+  a.volume=0;
+  let started=false;
+  function fadeTo(target,ms=1200){
+    const start=a.volume,step=0.016,interval=ms/(Math.abs(target-start)/step||1);
+    clearInterval(a._fi);
+    a._fi=setInterval(()=>{
+      const diff=target-a.volume;
+      if(Math.abs(diff)<step){a.volume=target;clearInterval(a._fi);if(target===0)a.pause();}
+      else a.volume+=step*Math.sign(diff);
+    },Math.max(16,interval));
+  }
+  return{
+    start(){
+      if(!started){started=true;a.volume=0;a.play().catch(()=>{});}
+      fadeTo(0.22,2000);
+    },
+    pause(){ fadeTo(0,600); },
+    resume(){ if(started){a.play().catch(()=>{});fadeTo(0.22,800);} },
+    fadeOut(ms=2000){ fadeTo(0,ms); }
+  };
+})();
+
+function playScene(idx){stopSpeak();clearTimeout(pending);showScene(idx);startProg(estMs(SCENES[idx].narration)+1400);if(!paused){bgMusic.start();speak(SCENES[idx].narration,()=>{if(!paused)pending=setTimeout(()=>{if(!paused)next();},1000);},idx);}}
+
+function next(){
+  if(current<SCENES.length-1){current++;playScene(current);}
+  else{
+    clearInterval(progTimer);
+    progFill.style.width='100%';
+    stopSpeak();
+    // Fade out and signal parent to close the modal
+    setTimeout(()=>{
+      bgMusic.fadeOut(1200);
+      document.body.style.transition='opacity 1.2s ease';
+      document.body.style.opacity='0';
+      setTimeout(()=>{
+        try{ window.parent.postMessage({type:'TRANSMISSION_COMPLETE'},'*'); }catch(e){}
+      }, 1200);
+    }, 2200);
+  }
+}
 function prev(){stopSpeak();clearTimeout(pending);if(current>0)current--;playScene(current);}
 function goTo(idx){stopSpeak();clearTimeout(pending);current=idx;playScene(current);}
-function togglePause(){paused=!paused;document.getElementById('btn-pause').textContent=paused?'▶ PLAY':'⏸ PAUSE';if(paused){stopSpeak();clearTimeout(pending);}else{speak(SCENES[current].narration,()=>{if(!paused)pending=setTimeout(()=>{if(!paused)next();},200);},current);}}
+function togglePause(){paused=!paused;document.getElementById('btn-pause').textContent=paused?'▶ PLAY':'⏸ PAUSE';if(paused){stopSpeak();clearTimeout(pending);bgMusic.pause();}else{bgMusic.resume();speak(SCENES[current].narration,()=>{if(!paused)pending=setTimeout(()=>{if(!paused)next();},1000);},current);}}
 function replay(){paused=false;document.getElementById('btn-pause').textContent='⏸ PAUSE';current=0;T0=Date.now();playScene(0);}
 
 document.getElementById('btn-prev').addEventListener('click',prev);
@@ -544,13 +631,10 @@ document.addEventListener('keydown',e=>{
    START SCREEN
 ═══════════════════════════════════════ */
 const startEl=document.getElementById('start');
-startEl.addEventListener('click',()=>{
-  startEl.style.opacity='0';
-  setTimeout(()=>startEl.style.display='none',800);
-  bgOnly=false;
-  T0=Date.now();
-  playScene(0);
-});
+startEl.style.display='none';
+bgOnly=false;
+T0=Date.now();
+playScene(0);
 </script>
 </body>
 </html>

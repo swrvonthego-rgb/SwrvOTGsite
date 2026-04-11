@@ -5,7 +5,7 @@
  * Run once:
  *   ELEVENLABS_API_KEY=sk_... node scripts/generate-narration.mjs
  *
- * Outputs 9 MP3 files to: public/audio/narration-0.mp3 … narration-8.mp3
+ * Outputs 7 MP3 files to: public/audio/narration-0.mp3 … narration-6.mp3
  */
 
 import fs from 'fs';
@@ -21,48 +21,43 @@ if (!API_KEY) {
   process.exit(1);
 }
 
-// Brian — Deep, Resonant and Comforting — American
+// Brian — Deep, Resonant and Comforting — American (free tier premade)
 const VOICE_ID = 'nPczCjzI2devNBz1zQrb';
 const MODEL_ID = 'eleven_multilingual_v2';
 
 // Exact narration text matching the scenes in brand-transmission.html
 // Period-separated fragments produce natural pauses with TTS
 const NARRATIONS = [
-  // 0 — Roadblocks
-  `Every journey. Has roadblocks. They come for everyone. No matter how prepared. No matter how talented. No matter how driven you are. No exceptions.`,
+  // 0 — Everyone Is An Artist
+  `The world has changed. Content creation is how the world speaks now. Whether you're a musician, a chef, a pastor, a dancer, a coach, a developer, an athlete, a stylist, a realtor, or a business owner — you are an artist. And every artist needs a brand ecosystem built entirely around their vision.`,
 
-  // 1 — Agencies Stop
-  `Most agencies. Get the job done. Complete the transaction. Close the ticket. Move on. But you. Are not a transaction. To us.`,
+  // 1 — Most Agencies Get A Job Done
+  `Complete the transaction. Close the ticket. Move on. Most agencies get a job done. But you are not a transaction to us.`,
 
-  // 2 — We Swerve
-  `We don't stop. Twenty years. Navigating every obstacle. With creativity. With intention. With heart. We don't stop. We swerve. Swrv. On the Go.`,
+  // 2 — More Than A Service
+  `You need more than a service. You need a guide who swerves with you — around every obstacle, every roadblock, every unexpected detour. We don't just build brands. We build with you.`,
 
-  // 3 — 20+ Years
-  `Twenty years. Of real world experience. Not software. Not shortcuts. Not automation. Genuine care. Lived experience. A deep passion for helping people fulfill the purpose. God placed inside them.`,
+  // 3 — We Swerve On The Go
+  `We swerve on roadblocks. Every obstacle — met with creativity, intention, and heart. We don't stop. We Swerve On The Go.`,
 
-  // 4 — Services
-  `Photography. Videography. Original music. Jingles. Commercials. Radio shows. Podcasts. Vision and mission statements. One full service branding ecosystem. Built entirely. Around you.`,
+  // 4 — Full Capabilities
+  `Photography, videography, original music, jingles, commercials, radio shows, podcasts, and vision and mission statements. One full-service branding ecosystem built entirely around you.`,
 
-  // 5 — Everyone Is a Creator
-  `The world has changed. Content creation is how the world speaks now. The entrepreneur. The pastor. The coach. The business owner. They are all artists. And every artist needs a brand. That is intentional. Authentic. Built to last.`,
+  // 5 — 20+ Years Doing Amazing Things
+  `Not software. Not shortcuts. Not automation. Over twenty years of real work, real care, and real results. We've been doing amazing things for over two decades — because genuine care is the foundation everything else is built on.`,
 
-  // 6 — You Need More
-  `When you don't know which way to go. You need more than a service. You need a guide. Someone who swerves with you. Around every obstacle. Every roadblock. Every unexpected detour.`,
-
-  // 7 — Love GPS
-  `Swerve on roadblocks. Let love GPS. We navigate every challenge. With patience. With purpose. With a genuine investment in where you are trying to go. Because when love leads. Nothing. Can stop the mission.`,
-
-  // 8 — Brand Close
-  `Swrv On the Go. A full service branding ecosystem. Built entirely around you. We want the experience of building with you. The pleasure of serving you. We want to swerve in our gifts. Every step. Of the way.`,
+  // 6 — Swerve On Roadblocks / Let Love GPS
+  `We navigate every challenge with patience. With purpose. With love. Because when love leads — nothing can stop the mission.`,
 ];
 
 // Ensure output directory exists
 fs.mkdirSync(OUT_DIR, { recursive: true });
 
-async function generate(idx, text) {
+async function generate(i, text) {
+  const idx = i;
   const outFile = path.join(OUT_DIR, `narration-${idx}.mp3`);
 
-  console.log(`\n[${idx + 1}/9] Generating: narration-${idx}.mp3`);
+  console.log(`\n[${i + 1}/7] Generating: narration-${idx}.mp3`);
 
   const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`, {
     method: 'POST',
@@ -106,6 +101,6 @@ async function generate(idx, text) {
     if (i < NARRATIONS.length - 1) await new Promise(r => setTimeout(r, 300));
   }
 
-  console.log('\n✅  All 9 files generated in public/audio/');
+  console.log('\n✅  All 7 files generated in public/audio/');
   console.log('   Open http://localhost:3002/brand-transmission.html\n');
 })();
