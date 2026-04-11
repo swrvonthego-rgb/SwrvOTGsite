@@ -22,7 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-public/audio/
 
 # Local media backups (never commit — large originals)
 local-media/
