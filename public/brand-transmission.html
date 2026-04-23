@@ -469,7 +469,13 @@ loadV();
 if(speechSynthesis.onvoiceschanged!==undefined) speechSynthesis.onvoiceschanged=loadV;
 
 function pickVoice(){
-  const preferred=[preferredVoiceName, 'Alex', 'Daniel', 'Fred', 'Google UK English Male', 'Microsoft George', 'Microsoft David'];
+  // Lock to stored voice if available, otherwise lock to 'Daniel' or 'Alex'
+  if(preferredVoiceName && preferredVoiceName !== 'Alex'){
+    const v=voices.find(v=>v.name===preferredVoiceName&&v.lang.startsWith('en'));
+    if(v) return v;
+  }
+  // Try system voices in priority order (most consistent narrator voices)
+  const preferred=['Daniel', 'Alex', 'Fred', 'Google UK English Male', 'Microsoft David'];
   for(const name of preferred){
     if(!name) continue;
     const v=voices.find(v=>v.name.includes(name)&&v.lang.startsWith('en'));
@@ -479,6 +485,7 @@ function pickVoice(){
       return v;
     }
   }
+  // Fallback only if none of the preferred voices are found, then lock it in
   const fallback = voices.find(v=>v.lang.startsWith('en'))||null;
   if(fallback){
     preferredVoiceName = fallback.name;
@@ -498,7 +505,7 @@ function speakFallback(text,onEnd,myEpoch){
 
   speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(text);
-  u.rate=0.68; u.pitch=0.50; u.volume=1;
+  u.rate=0.72; u.pitch=0.45; u.volume=1;
   const v=pickVoice(); if(v) u.voice=v;
 
   // Safety timer: fires if the browser silently drops the speech (common in iframes)
