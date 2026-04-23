@@ -26,20 +26,20 @@ const column1Cards: HeroCardData[] = [
     subtitle: "INTERIOR DESIGN" 
   },
   { 
-    image: "/media/main-sample.png", 
+    image: "https://res.cloudinary.com/dastq6bk5/image/upload/v1776950508/cld-sample_p72mk2.jpg", 
     title: "PET LOVERS", 
     subtitle: "COMMUNITY" 
   },
   { 
-    image: "/media/balloons.jpg", 
+    image: "https://res.cloudinary.com/dastq6bk5/image/upload/v1776950507/shoe_e9qvna.jpg", 
     title: "TRAVELERS", 
     subtitle: "EXPLORATION" 
   },
   { 
-    image: "/media/shoe.jpg", 
+    image: "https://res.cloudinary.com/dastq6bk5/image/upload/v1776950507/man-portrait_xykmg4.jpg", 
     title: "FASHION DESIGNERS", 
     subtitle: "STYLE" 
-  },
+  }
 ];
 
 const column2Cards: HeroCardData[] = [
@@ -59,12 +59,12 @@ const column2Cards: HeroCardData[] = [
     subtitle: "CREATIVE" 
   },
   { 
-    image: "/media/man-portrait.jpg", 
+    image: "https://res.cloudinary.com/dastq6bk5/image/upload/w_800,h_800,c_fill,q_auto/1752950982581945_2_kk3jt3_ui7upw.png", 
     title: "CONTENT CREATORS", 
     subtitle: "DIGITAL MEDIA" 
   },
   { 
-    image: "/media/woman-on-a-football-field.jpg", 
+    image: "https://res.cloudinary.com/dastq6bk5/image/upload/v1776950507/woman-on-a-football-field_agfcng.jpg", 
     title: "SUPER-DOPE PEOPLE", 
     subtitle: "LIFESTYLE" 
   },

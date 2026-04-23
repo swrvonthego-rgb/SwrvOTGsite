@@ -452,32 +452,8 @@ function speak(text,onEnd,sceneIdx){
 
   // ── Primary: pre-generated MP3 ──────────────────────────────────────
   if(sceneIdx!==undefined){
-    const audio=new Audio(`/audio/narration-${sceneIdx}.mp3`);
-    activeAudio=audio;
-
-    let fallbackFired=false;
-    const tryFallback=()=>{
-      if(fallbackFired||epoch!==myEpoch) return;
-      fallbackFired=true;
-      activeAudio=null;
-      setWave(false);
-      speakFallback(text,guardedEnd,myEpoch);
-    };
-
-    audio.onplay  =()=>{ if(epoch===myEpoch) setWave(true); };
-    audio.onended =()=>{
-      if(epoch!==myEpoch) return;
-      setWave(false);
-      activeAudio=null;
-      setTimeout(guardedEnd,400);
-    };
-    audio.onerror =tryFallback;
-    audio.play().catch(tryFallback);
-
-    if(sceneIdx+1<SCENES.length){
-      const pre=new Audio(`/audio/narration-${sceneIdx+1}.mp3`);
-      pre.preload='auto';
-    }
+    // Cloudinary audio assets are not available for these previews, so use browser speech synthesis instead.
+    speakFallback(text, guardedEnd, myEpoch);
     return;
   }
 
@@ -486,17 +462,29 @@ function speak(text,onEnd,sceneIdx){
 
 // ── Fallback: Web Speech API ─────────────────────────────────────────
 let voices=[];
+const storedVoiceName = typeof localStorage !== 'undefined' ? localStorage.getItem('swrvBrandTransmissionVoice') : null;
+let preferredVoiceName = storedVoiceName || 'Alex';
 const loadV=()=>{ voices=speechSynthesis.getVoices(); };
 loadV();
 if(speechSynthesis.onvoiceschanged!==undefined) speechSynthesis.onvoiceschanged=loadV;
 
 function pickVoice(){
-  const preferred=['Google UK English Male','Microsoft George','Microsoft David','Daniel','Alex','Fred'];
+  const preferred=[preferredVoiceName, 'Alex', 'Daniel', 'Fred', 'Google UK English Male', 'Microsoft George', 'Microsoft David'];
   for(const name of preferred){
+    if(!name) continue;
     const v=voices.find(v=>v.name.includes(name)&&v.lang.startsWith('en'));
-    if(v) return v;
+    if(v){
+      preferredVoiceName = v.name;
+      if(typeof localStorage !== 'undefined') localStorage.setItem('swrvBrandTransmissionVoice', v.name);
+      return v;
+    }
   }
-  return voices.find(v=>v.lang.startsWith('en'))||null;
+  const fallback = voices.find(v=>v.lang.startsWith('en'))||null;
+  if(fallback){
+    preferredVoiceName = fallback.name;
+    if(typeof localStorage !== 'undefined') localStorage.setItem('swrvBrandTransmissionVoice', fallback.name);
+  }
+  return fallback;
 }
 
 function speakFallback(text,onEnd,myEpoch){
@@ -568,26 +556,16 @@ function showScene(idx){scenes.forEach(s=>s.classList.remove('active'));scenes[i
 
 /* ── Background music ──────────────────────────────────────────── */
 const bgMusic=(()=>{
-  const a=new Audio('/media/swrvBIRDSONG_-_SWRV_Instrumental_cx9yj8.mp3');
-  a.loop=true;
-  a.volume=0;
   let started=false;
+  let fadeTimer=null;
   function fadeTo(target,ms=1200){
-    const start=a.volume,step=0.016,interval=ms/(Math.abs(target-start)/step||1);
-    clearInterval(a._fi);
-    a._fi=setInterval(()=>{
-      const diff=target-a.volume;
-      if(Math.abs(diff)<step){a.volume=target;clearInterval(a._fi);if(target===0)a.pause();}
-      else a.volume+=step*Math.sign(diff);
-    },Math.max(16,interval));
+    clearInterval(fadeTimer);
+    fadeTimer=setInterval(()=>{ clearInterval(fadeTimer); }, ms);
   }
   return{
-    start(){
-      if(!started){started=true;a.volume=0;a.play().catch(()=>{});}
-      fadeTo(0.22,2000);
-    },
+    start(){ started=true; },
     pause(){ fadeTo(0,600); },
-    resume(){ if(started){a.play().catch(()=>{});fadeTo(0.22,800);} },
+    resume(){ if(started){ fadeTo(0.22,800); } },
     fadeOut(ms=2000){ fadeTo(0,ms); }
   };
 })();

@@ -27,8 +27,8 @@ dist-ssr
 local-media/
 
 # Large video files — host on Cloudinary instead
-public/media/*.mov
-public/media/*.mp4
+public/media/*
+public/audio/*
 
 # Misc
 SLIDE_REORDER_COMPLETED.md
